@@ -1,8 +1,0 @@
-# Configs pulled out of a running stage and needing a re-run.
-# Drained automatically by scripts/run_pending_after_queue.sh once phase 1 finishes.
-#
-# Concept erasure was cut to LEACE only (see reports/EXPERIMENT_PLAN.md, "Erasure: one
-# method"). INLP and mean-difference are future work, not results that went missing.
-configs/mitigation/embedding/qwen3.5-4b_uk_leace.yaml
-configs/mitigation/embedding/qwen3.5-9b_en_leace.yaml
-configs/mitigation/embedding/qwen3.5-9b_uk_leace.yaml
