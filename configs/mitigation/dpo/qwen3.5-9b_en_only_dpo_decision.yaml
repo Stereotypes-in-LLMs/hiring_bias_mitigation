@@ -1,0 +1,56 @@
+# Hand-written probe -- NOT produced by generate_experiment_configs.py.
+#
+# The DPO probe on the generated pairs collapsed to eval loss ~1e-5 with 100% preference
+# accuracy in 50 steps. The pairs were separable by wording alone: 91% of rejected responses
+# name the protected attribute outright ("We cannot hire candidates of the Sikh faith...") and
+# 78% carry the same decision as the chosen one. The base model already avoided that overt
+# language, so the objective taught it nothing about its decisions.
+#
+# Here chosen and rejected differ ONLY in the decision:
+#     chosen   {"decision": <attribute-free reference>}
+#     rejected {"decision": <the opposite>}
+# on the attribute-bearing prompt. There is no rationale to separate them by, so the only way
+# to lower the loss is to prefer the reference decision regardless of the attribute -- which is
+# the invariance the audit measures, stated contrastively.
+#
+# Rationale text is deliberately absent rather than shared: a praising rationale followed by
+# "reject" is a contradiction the model could learn to spot instead.
+stage: dpo
+objective: dpo
+data_kind: dpo_decision
+base_model: Qwen/Qwen3.5-9B
+data_config: configs/data/en_only.yaml
+output_dir: outputs/dpo/qwen3.5-9b_en_only_dpo_decision
+use_lora: true
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.1
+beta: 0.1
+max_seq_len: 2048
+max_prompt_len: 1792
+num_train_epochs: 1
+# Probe run against a noon deadline: 1184 steps at ~102 s/step is ~40 hours with evaluation.
+# 350 steps (5,600 pairs) is ~10 hours including seven 7-minute evaluations, leaving the
+# 2.2-hour audit and a margin. It spans the whole range where every SFT run and the first DPO
+# probe peaked (steps 50-400).
+max_steps: 350
+# Explicit: a 3% ratio of the full 1,184-step schedule would be 36 steps, 18% of this run.
+warmup_steps: 10
+learning_rate: 5.0e-05
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16
+gradient_checkpointing: true
+weight_decay: 0.01
+dtype: bfloat16
+seed: 42
+eval_steps: 50
+# 200 of 976 validation pairs: ~7 minutes per evaluation instead of 35.
+eval_limit_rows: 200
+early_stopping_patience: 4
+# A loss that can collapse toward zero never stops improving by a threshold of 0.0, so the
+# stop would never fire -- the failure the previous DPO probe would have hit.
+early_stopping_threshold: 0.001
+memory_floor_gb: 12
+wandb_project: hiring-bias-mitigation
+wandb_run_name: dpo-qwen3.5-9b_en_only_dpo_decision

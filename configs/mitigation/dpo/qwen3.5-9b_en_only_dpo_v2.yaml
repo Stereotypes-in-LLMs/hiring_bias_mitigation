@@ -1,0 +1,44 @@
+# Hand-written probe -- NOT produced by generate_experiment_configs.py, so it survives a
+# regeneration. Asks the question both SFT variants could not: can a *contrastive* objective
+# move decisions? SFT v1 changed rationale text on 18% of rows and decisions on 0.3%; SFT v2
+# (decision-weighted) changed neither -- it made the model surer of what it already decided.
+#
+# Differences from the generated qwen3.5-9b_en_only_dpo.yaml, each for a stated reason:
+#
+#   sft_checkpoint: null   Trains from the base model. The generated config merges the SFT
+#                          adapter into the base and trains DPO on top, but its audit loads
+#                          base + DPO adapter -- which silently omits the SFT delta and audits
+#                          a model nobody trained. SFT moved 0.3% of decisions, so dropping it
+#                          costs almost nothing and makes the audit measure what was trained.
+#   learning_rate 5e-5     5e-6 is a full-fine-tune DPO rate. On LoRA, SFT v2 at 5e-5 already
+#                          moved outputs on only 0.09% of rows; ten times less would test
+#                          nothing.
+#   memory settings        DPO runs chosen and rejected through the model on every step, so it
+#                          is the heaviest thing on this plan. Checkpointing on, eval batch 1,
+#                          and the guard that stops the run before the machine runs out.
+stage: dpo
+objective: dpo
+base_model: Qwen/Qwen3.5-9B
+data_config: configs/data/en_only.yaml
+output_dir: outputs/dpo/qwen3.5-9b_en_only_dpo_v2
+use_lora: true
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.1
+beta: 0.1
+max_seq_len: 2048
+max_prompt_len: 1792
+num_train_epochs: 1
+learning_rate: 5.0e-05
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16
+gradient_checkpointing: true
+weight_decay: 0.01
+dtype: bfloat16
+seed: 42
+eval_steps: 50
+early_stopping_patience: 4
+memory_floor_gb: 12
+wandb_project: hiring-bias-mitigation
+wandb_run_name: dpo-qwen3.5-9b_en_only_dpo_v2

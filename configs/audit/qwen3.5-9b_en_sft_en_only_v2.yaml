@@ -1,0 +1,30 @@
+# Hand-written: audits the v2 SFT variant (decision-weighted loss, benchmark-matched
+# target mix, label smoothing). Same groups, conditions and benchmark as the v1 audit,
+# so the two rows in section 6 differ only by the adapter.
+backend: vllm
+max_model_len: 8192
+gpu_memory_utilization: 0.8
+seed: 42
+raw_dir: outputs/raw
+conditions:
+- explicit
+- implicit
+- attr_free
+chat_template_kwargs:
+  enable_thinking: false
+max_intersection_cells: null
+generation:
+  max_new_tokens: 512
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42
+model: Qwen/Qwen3.5-9B
+lang: en
+protected_groups:
+- military_status
+- gender
+- religion
+run_suffix: en_only_v2
+mitigation:
+  family: sft
+  lora_path: outputs/sft/qwen3.5-9b_en_only_v2

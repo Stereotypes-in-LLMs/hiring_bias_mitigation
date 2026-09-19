@@ -1,0 +1,45 @@
+# Hand-written probe -- the target is CONSISTENCY, not correctness.
+#
+# The decision-only probe trained toward the teacher's attribute-free verdict and moved 102
+# audited decisions, 52 toward it and 50 away. 101 of the 102 were in sets the student already
+# decided inconsistently across attribute variants: the borderline cases where bias acts, and
+# where a single temperature-0.7 teacher sample is a coin flip. The right decisions moved, toward
+# a random target.
+#
+# Here the target is the student's own majority across the six attribute variants of each
+# (pair, condition) set on the synthetic pool -- a vote over the attribute, with no teacher in
+# the signal -- plus a matched number of already-consistent sets as anchors. Built by
+# scripts/build_consistency_pairs.py. Every other setting matches the decision-only probe, so
+# the two rows in section 6 differ only in the target.
+#
+stage: dpo
+objective: dpo
+data_kind: dpo_consistency
+base_model: Qwen/Qwen3.5-9B
+data_config: configs/data/en_only.yaml
+output_dir: outputs/dpo/qwen3.5-9b_en_only_dpo_consistency
+use_lora: true
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.1
+beta: 0.1
+max_seq_len: 2048
+max_prompt_len: 1792
+num_train_epochs: 1
+max_steps: 350
+warmup_steps: 10
+learning_rate: 5.0e-05
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16
+gradient_checkpointing: true
+weight_decay: 0.01
+dtype: bfloat16
+seed: 42
+eval_steps: 50
+eval_limit_rows: 200
+early_stopping_patience: 4
+early_stopping_threshold: 0.001
+memory_floor_gb: 12
+wandb_project: hiring-bias-mitigation
+wandb_run_name: dpo-qwen3.5-9b_en_only_dpo_consistency

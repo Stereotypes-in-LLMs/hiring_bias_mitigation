@@ -1,0 +1,28 @@
+# Hand-written: audits the decision-only DPO probe (base + this adapter).
+backend: vllm
+max_model_len: 8192
+gpu_memory_utilization: 0.8
+seed: 42
+raw_dir: outputs/raw
+conditions:
+- explicit
+- implicit
+- attr_free
+chat_template_kwargs:
+  enable_thinking: false
+max_intersection_cells: null
+generation:
+  max_new_tokens: 512
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42
+model: Qwen/Qwen3.5-9B
+lang: en
+protected_groups:
+- military_status
+- gender
+- religion
+run_suffix: en_only_dpo_decision
+mitigation:
+  family: dpo
+  lora_path: outputs/dpo/qwen3.5-9b_en_only_dpo_decision

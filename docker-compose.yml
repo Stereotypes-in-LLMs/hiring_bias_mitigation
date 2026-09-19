@@ -1,0 +1,83 @@
+x-common: &common
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  image: hiring-bias-mitigation:latest
+  gpus: all
+  ipc: host
+  ulimits:
+    memlock: -1
+    stack: 67108864
+  env_file:
+    - .env
+  environment:
+    # Container-side paths for the bind-mounted model drive. These override whatever host
+    # paths .env sets, so one .env works for both local and Docker runs.
+    HBM_OUTPUT_ROOT: /models
+    HF_HOME: /models/hf-cache
+    WANDB_DIR: /models/wandb
+  volumes:
+    # Base-model downloads, generated datasets, raw generations and trained adapters live
+    # here, NOT on the system disk. Set the host path with HBM_MODELS_ROOT in .env.
+    #
+    # `:?` on purpose -- there is deliberately no default. A default is what makes this fail
+    # silently: compose bind-mounts a stale path, Docker CREATES it as an empty root-owned
+    # directory on the system SSD, and the checkpoints go there while every path still reads
+    # like the external drive. Unset stops the run instead. A path that is set but not
+    # actually mounted is caught one layer down by the .hbm-models-root marker check in
+    # utils/config.py::require_output_root.
+    - ${HBM_MODELS_ROOT:?set HBM_MODELS_ROOT in .env -- see .env.example}:/models
+    - ./eval:/workspace/eval
+    - ./reports:/workspace/reports
+
+services:
+  # One-off: fetch and validate the golden benchmark, write the holdout ids.
+  benchmark:
+    <<: *common
+    command: python scripts/build_benchmark.py
+
+  # STAGE 1. Read its report before enabling anything below it.
+  audit:
+    <<: *common
+    command: bash scripts/run_all_audit.sh
+
+  # Builds the semi-synthetic training data with the teacher model.
+  generate:
+    <<: *common
+    command: python scripts/generate_training_data.py --config configs/generation/teacher.yaml
+
+  prompt:
+    <<: *common
+    command: bash scripts/run_all_prompt.sh
+
+  scrub:
+    <<: *common
+    command: bash scripts/run_all_scrub.sh
+
+  # Fits each eraser, then evaluates with it attached. Uses the transformers backend --
+  # the intervention is a forward hook, which vLLM has nowhere to host.
+  embedding:
+    <<: *common
+    command: bash scripts/run_all_embedding.sh
+
+  sft:
+    <<: *common
+    command: bash scripts/run_all_sft.sh
+
+  # Run sft first: each DPO config continues from an SFT run's output directory.
+  dpo:
+    <<: *common
+    command: bash scripts/run_all_dpo.sh
+
+  report:
+    <<: *common
+    command: python scripts/make_report.py
+
+  # Grades the evidence and writes the mitigation shortlist. Reads only.
+  analyze:
+    <<: *common
+    command: python scripts/analyze_results.py
+
+  shell:
+    <<: *common
+    entrypoint: ["/bin/bash"]

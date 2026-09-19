@@ -1,0 +1,57 @@
+# Which protected groups each mitigation run should evaluate.
+# eval_scope: targeted-no-intersections
+# Apply with: python scripts/generate_experiment_configs.py --no-runners \
+#                 --eval-scope /home/naz2001r/Documents/hiring_bias_mitigation/reports/eval_scope.yaml
+
+conditions:
+  lapa-12b:
+    en:
+    - explicit
+    - implicit
+    - attr_free
+    uk:
+    - explicit
+    - implicit
+    - attr_free
+  qwen3.5-4b:
+    en:
+    - explicit
+    - implicit
+    - attr_free
+    uk:
+    - explicit
+    - implicit
+    - attr_free
+  qwen3.5-9b:
+    en:
+    - implicit
+    - attr_free
+    uk:
+    - explicit
+    - implicit
+    - attr_free
+groups:
+  lapa-12b:
+    en:
+    - gender
+    - military_status
+    - religion
+    uk:
+    - gender
+    - military_status
+    - religion
+  qwen3.5-4b:
+    en:
+    - military_status
+    - religion
+    uk:
+    - gender
+    - military_status
+    - religion
+  qwen3.5-9b:
+    en:
+    - military_status
+    uk:
+    - gender
+    - military_status
+    - religion

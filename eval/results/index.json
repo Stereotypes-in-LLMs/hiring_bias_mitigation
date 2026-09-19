@@ -1,0 +1,551 @@
+{
+  "Qwen3.5-4B--en--baseline--smoke": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "none",
+    "n_prompts": 220,
+    "population_acceptance_rate": 0.2772727272727273,
+    "reference_agreement": 0.7772727272727272,
+    "n_tests": 30
+  },
+  "Qwen3.5-4B--en--baseline": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.29046734757041165,
+    "reference_agreement": 0.8057134014237078,
+    "n_tests": 1074
+  },
+  "Qwen3.5-4B--en--embedding--leace": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "embedding",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.12775413711583924,
+    "reference_agreement": 0.8094562647754137,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--counterfactual_invariance": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.12154188060387769,
+    "reference_agreement": 0.7532377959996934,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--fairness_constitution": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.21363984674329503,
+    "reference_agreement": 0.7987739463601533,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--ignore_personal_info": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.32145593869731803,
+    "reference_agreement": 0.8085057471264367,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--reasoning": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.2265134099616858,
+    "reference_agreement": 0.7934099616858238,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--recruiter_guidelines": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.1550191570881226,
+    "reference_agreement": 0.7813793103448275,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--second_pass_verification": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.021915708812260536,
+    "reference_agreement": 0.683831417624521,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--structured_rubric": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.0852582303737242,
+    "reference_agreement": 0.7416928861944594,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--prompt--zero_shot_cot": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.18130268199233718,
+    "reference_agreement": 0.8003065134099617,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--scrub--lexical": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "scrub",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.33586206896551724,
+    "reference_agreement": 0.8344061302681992,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--scrub--llm": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "scrub",
+    "n_prompts": 13050,
+    "population_acceptance_rate": 0.28544061302681994,
+    "reference_agreement": 0.8147892720306513,
+    "n_tests": 84
+  },
+  "Qwen3.5-4B--en--sft--adapter--en_only": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.2803220611916264,
+    "reference_agreement": 0.8076650563607085,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--baseline": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.21375425564840606,
+    "reference_agreement": 0.7479665738161559,
+    "n_tests": 1074
+  },
+  "Qwen3.5-4B--uk--prompt--counterfactual_invariance": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.17369591133163642,
+    "reference_agreement": 0.7362180623127236,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--fairness_constitution": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.3689229678791198,
+    "reference_agreement": 0.7472212377976094,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--ignore_personal_info": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.20167471819645733,
+    "reference_agreement": 0.7522061191626409,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--reasoning": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.16045088566827698,
+    "reference_agreement": 0.7397745571658615,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--recruiter_guidelines": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.13545893719806762,
+    "reference_agreement": 0.7410628019323672,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--second_pass_verification": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.16544283413848632,
+    "reference_agreement": 0.740450885668277,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--structured_rubric": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.05700252051961481,
+    "reference_agreement": 0.6957280423964325,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--prompt--zero_shot_cot": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.12132826591084772,
+    "reference_agreement": 0.7297410461221334,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--scrub--lexical": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "scrub",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.20190016103059583,
+    "reference_agreement": 0.7543639291465378,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--scrub--llm": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "scrub",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.18415458937198068,
+    "reference_agreement": 0.7451207729468599,
+    "n_tests": 204
+  },
+  "Qwen3.5-4B--uk--sft--adapter--uk_only": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.19355877616747183,
+    "reference_agreement": 0.7490499194847021,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--en--baseline": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.1409718353450944,
+    "reference_agreement": 0.7802042711234912,
+    "n_tests": 1074
+  },
+  "Qwen3.5-9B--en--dpo--adapter--en_only_dpo_decision": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "dpo",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.1575523349436393,
+    "reference_agreement": 0.7891787439613527,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--en--dpo--adapter--en_only_dpo_v2_ckpt50": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "dpo",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.15710144927536232,
+    "reference_agreement": 0.7889855072463768,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--en--embedding--leace": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "embedding",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.07444444444444444,
+    "reference_agreement": 0.7314814814814815,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--counterfactual_invariance": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.09518518518518519,
+    "reference_agreement": 0.7492592592592593,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--fairness_constitution": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.26222222222222225,
+    "reference_agreement": 0.8392592592592593,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--ignore_personal_info": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.1474074074074074,
+    "reference_agreement": 0.7807407407407407,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--reasoning": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.08814814814814814,
+    "reference_agreement": 0.7444444444444445,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--recruiter_guidelines": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.09259259259259259,
+    "reference_agreement": 0.7451851851851852,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--second_pass_verification": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.13444444444444445,
+    "reference_agreement": 0.7751851851851852,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--structured_rubric": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.035925925925925924,
+    "reference_agreement": 0.7003703703703704,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--zero_shot_cot": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.11444444444444445,
+    "reference_agreement": 0.7640740740740741,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--scrub--lexical": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "scrub",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.1674074074074074,
+    "reference_agreement": 0.802962962962963,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--scrub--llm": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "scrub",
+    "n_prompts": 2700,
+    "population_acceptance_rate": 0.18037037037037038,
+    "reference_agreement": 0.8077777777777778,
+    "n_tests": 15
+  },
+  "Qwen3.5-9B--en--sft--adapter--en_only": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.15784219001610306,
+    "reference_agreement": 0.7894041867954912,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--en--sft--adapter--en_only_v2_ckpt250": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.1570048309178744,
+    "reference_agreement": 0.78914653784219,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--baseline": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.3287898483441659,
+    "reference_agreement": 0.7949117920148561,
+    "n_tests": 1074
+  },
+  "Qwen3.5-9B--uk--embedding--leace": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "embedding",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.5965168231968633,
+    "reference_agreement": 0.7425458192760098,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--counterfactual_invariance": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.3132891007472301,
+    "reference_agreement": 0.7990208709095594,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--fairness_constitution": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.38573775243984926,
+    "reference_agreement": 0.7994331175314845,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--ignore_personal_info": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.3089855072463768,
+    "reference_agreement": 0.808695652173913,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--reasoning": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.2647058823529412,
+    "reference_agreement": 0.8019779653372849,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--recruiter_guidelines": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.24913840306631882,
+    "reference_agreement": 0.8019132283312397,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--second_pass_verification": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.30009343686567647,
+    "reference_agreement": 0.767181106421368,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--structured_rubric": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.19236714975845412,
+    "reference_agreement": 0.7714975845410628,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--prompt--zero_shot_cot": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.27598647125140924,
+    "reference_agreement": 0.810178772749235,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--scrub--lexical": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "scrub",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.28933977455716586,
+    "reference_agreement": 0.8169404186795491,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--scrub--llm": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "scrub",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.2965312892524719,
+    "reference_agreement": 0.8064027826983156,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--uk--sft--adapter--uk_only": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.29500805152979065,
+    "reference_agreement": 0.8050241545893719,
+    "n_tests": 204
+  },
+  "gemma-4-12B-it--en--baseline": {
+    "model": "google/gemma-4-12B-it",
+    "lang": "en",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.37988238935314145,
+    "reference_agreement": 0.8444568245125348,
+    "n_tests": 1074
+  },
+  "gemma-4-12B-it--uk--baseline": {
+    "model": "google/gemma-4-12B-it",
+    "lang": "uk",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.3971711544413494,
+    "reference_agreement": 0.8443515939337667,
+    "n_tests": 1074
+  },
+  "gemma-4-E4B-it--en--baseline": {
+    "model": "google/gemma-4-E4B-it",
+    "lang": "en",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.5539709068399876,
+    "reference_agreement": 0.7583658310120706,
+    "n_tests": 1074
+  },
+  "gemma-4-E4B-it--uk--baseline": {
+    "model": "google/gemma-4-E4B-it",
+    "lang": "uk",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.48768671280148196,
+    "reference_agreement": 0.8114936404582092,
+    "n_tests": 1074
+  },
+  "lapa-v0.1.2-instruct--en--baseline": {
+    "model": "lapa-llm/lapa-v0.1.2-instruct",
+    "lang": "en",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.8150096874632464,
+    "reference_agreement": 0.4945310710682208,
+    "n_tests": 1074
+  },
+  "lapa-v0.1.2-instruct--uk--baseline": {
+    "model": "lapa-llm/lapa-v0.1.2-instruct",
+    "lang": "uk",
+    "mitigation": "none",
+    "n_prompts": 161550,
+    "population_acceptance_rate": 0.7858679679313488,
+    "reference_agreement": 0.526943991468201,
+    "n_tests": 1074
+  }
+}

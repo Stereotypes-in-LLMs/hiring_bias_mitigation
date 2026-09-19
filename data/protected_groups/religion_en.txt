@@ -1,0 +1,9 @@
+Christian
+Muslim
+Atheist
+Hindu
+Jew
+Sikh
+Jain
+Buddhist
+Zoroastrian

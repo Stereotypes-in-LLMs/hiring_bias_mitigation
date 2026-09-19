@@ -1,0 +1,28 @@
+# Runtime dependencies for the Docker image. torch is deliberately absent: the NGC base
+# image already ships a build matched to its CUDA and architecture (see docker/Dockerfile).
+datasets>=3.0
+huggingface_hub>=0.25
+transformers>=4.46
+accelerate>=1.0
+peft>=0.13
+trl>=0.12
+sentence-transformers>=3.0
+scikit-learn>=1.5
+scipy>=1.13
+numpy>=1.26
+pandas>=2.2
+pyarrow>=17.0
+pyyaml>=6.0
+tqdm>=4.66
+wandb>=0.18
+
+# Ukrainian morphology, used by the attribute scrubber and the CV pre-filter.
+pymorphy3>=2.0
+pymorphy3-dicts-uk
+tokenize-uk>=0.1
+translitua>=2.0
+
+# vLLM is the default backend for the audit and for teacher generation. On aarch64 it may
+# need to come from the NGC image or a source build -- if the wheel does not resolve, drop
+# this line and set `backend: transformers` in the configs.
+vllm>=0.8

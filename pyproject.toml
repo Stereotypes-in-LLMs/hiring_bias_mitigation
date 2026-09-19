@@ -1,0 +1,64 @@
+[project]
+name = "hiring-bias-mitigation"
+version = "0.1.0"
+description = "Auditing and mitigating hiring bias in open-weight LLMs across protected groups, in English and Ukrainian"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "datasets>=3.0",
+    "huggingface_hub>=0.25",
+    "transformers>=4.46",
+    "accelerate>=1.0",
+    "peft>=0.13",
+    "trl>=0.12",
+    "sentence-transformers>=3.0",
+    "scikit-learn>=1.5",
+    "scipy>=1.13",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "wandb>=0.18",
+    # torch is intentionally NOT pinned: install it matching your CUDA/arch, or use the
+    # Docker image (NGC PyTorch base for GB10/arm64), which already ships it.
+    # vllm is optional -- see the [vllm] extra. The transformers backend works without it.
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+vllm = ["vllm>=0.8"]
+# Ukrainian morphology, used by the attribute-scrubbing mitigation and the CV pre-filter.
+ukr = ["pymorphy3>=2.0", "pymorphy3-dicts-uk", "tokenize-uk>=0.1", "translitua>=2.0"]
+# Paper figures. Kept out of the default install so a sweep machine never has to resolve a
+# plotting stack, and so installing it cannot disturb numpy mid-run.
+# vl-convert renders Vega-Lite to SVG/PDF/PNG in-process -- no browser, no node, which is what
+# makes the figures reproducible on the same machine that ran the sweep.
+viz = ["altair>=5.3", "vl-convert-python>=1.6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = [
+    # `x != x` is the NaN test used throughout the report renderer, where the value may be a
+    # float, None, or a numpy scalar and `math.isnan` would raise on two of the three.
+    "PLR0124",
+    "RUF100",  # scripts carry `# noqa: E402` for the sys.path bootstrap; harmless if unused
+    "B008",
+    # This repository is bilingual by design: every Ukrainian prompt, attribute list and
+    # regex is Cyrillic, and "ambiguous character" fires on all of it.
+    "RUF001", "RUF002", "RUF003",
+    # zip() over columns of the same frame is length-matched by construction; requiring
+    # strict= on ~20 such sites would be noise, not safety.
+    "B905",
+]

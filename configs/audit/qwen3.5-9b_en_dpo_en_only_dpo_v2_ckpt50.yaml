@@ -1,0 +1,31 @@
+# Hand-written: audits DPO checkpoint-50. The run was stopped there on purpose: eval loss
+# had already collapsed to ~1e-5 with 100% preference accuracy, because 91% of rejected
+# responses name the protected attribute and 78% share the chosen response's decision.
+# The pairs are separable by wording alone, so further steps would only sharpen that.
+backend: vllm
+max_model_len: 8192
+gpu_memory_utilization: 0.8
+seed: 42
+raw_dir: outputs/raw
+conditions:
+- explicit
+- implicit
+- attr_free
+chat_template_kwargs:
+  enable_thinking: false
+max_intersection_cells: null
+generation:
+  max_new_tokens: 512
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42
+model: Qwen/Qwen3.5-9B
+lang: en
+protected_groups:
+- military_status
+- gender
+- religion
+run_suffix: en_only_dpo_v2_ckpt50
+mitigation:
+  family: dpo
+  lora_path: outputs/dpo/qwen3.5-9b_en_only_dpo_v2/checkpoint-50

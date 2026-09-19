@@ -1,0 +1,31 @@
+# Hand-written: audits the best v2 checkpoint (step 250, lowest eval loss).
+# The run was lost to a system-wide OOM at step 416; the best checkpoint had already been
+# written, so the question v2 exists to answer -- did decisions move? -- can be settled
+# without retraining. Same groups, conditions and benchmark as the v1 audit.
+backend: vllm
+max_model_len: 8192
+gpu_memory_utilization: 0.8
+seed: 42
+raw_dir: outputs/raw
+conditions:
+- explicit
+- implicit
+- attr_free
+chat_template_kwargs:
+  enable_thinking: false
+max_intersection_cells: null
+generation:
+  max_new_tokens: 512
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42
+model: Qwen/Qwen3.5-9B
+lang: en
+protected_groups:
+- military_status
+- gender
+- religion
+run_suffix: en_only_v2_ckpt250
+mitigation:
+  family: sft
+  lora_path: outputs/sft/qwen3.5-9b_en_only_v2/checkpoint-250

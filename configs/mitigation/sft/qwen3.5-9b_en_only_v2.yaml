@@ -1,0 +1,50 @@
+# Hand-written variant arm -- NOT produced by generate_experiment_configs.py, so it survives a
+# regeneration. Tests five changes at once against qwen3.5-9b_en_only, whose v1 result was
+# "the model learned to write like the teacher without learning to decide like it":
+# attribute-mention rate halved, every acceptance-rate disparity unchanged.
+#
+#   A  decision_loss_weight   the decision is 16% of the tokens and was 16% of the gradient
+#   C' sft_v2 split           targets matched to the benchmark's 34% hire rate, not 50/50
+#   D  label_smoothing        entropy fell 35% while validation loss rose
+#   E  eval_steps 50          v1's best checkpoint was its *first* evaluation at step 100
+#   F  weight_decay           was 0.0
+#
+# Five levers at once is deliberate: the question is whether decisions can be moved at all,
+# not which lever moves them. If they move, bisect; if they do not, the limitation is
+# structural and the answer is a contrastive objective, not SFT hyperparameters.
+stage: sft
+base_model: Qwen/Qwen3.5-9B
+data_config: configs/data/en_only.yaml
+data_kind: sft_v2
+output_dir: outputs/sft/qwen3.5-9b_en_only_v2
+use_lora: true
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.1
+max_seq_len: 2048
+num_train_epochs: 2
+# v1 ran at 1e-4 and peaked at its first evaluation; half that, measured more finely.
+learning_rate: 5.0e-5
+per_device_train_batch_size: 1
+# Evaluation is the memory peak here, not training: it runs the same full-logit forward with
+# no backward to amortise it, and transformers defaults this to 4.
+per_device_eval_batch_size: 1
+# 1 x 16 as in v1, not 2 x 8: the same effective batch with half the logit tensor per step.
+# v2 inherited 2 x 8 from the 4B template by mistake and doubled its per-step footprint.
+gradient_accumulation_steps: 16
+# Back ON for this arm. `loss_type: nll` is required by the custom loss and materialises the
+# full logits (~250k vocab), which checkpointing-off could not fit: the first evaluation at
+# step 50 was OOM-killed with ~11 GB of headroom. Costs ~30% speed, and a run that finishes
+# is worth more than one that is 30% faster until it dies.
+gradient_checkpointing: true
+dtype: bfloat16
+seed: 42
+decision_loss_weight: 8.0
+label_smoothing_factor: 0.1
+weight_decay: 0.01
+eval_steps: 50
+early_stopping_patience: 4
+wandb_project: hiring-bias-mitigation
+wandb_run_name: sft-qwen3.5-9b_en_only_v2
+# Stop cleanly and save below this, instead of letting the kernel kill the machine.
+memory_floor_gb: 12
