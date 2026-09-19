@@ -671,8 +671,9 @@ def _section_future_work(runs: list[dict], analysis: dict | None) -> str:
 
     rows.append(
         "| **Synthetic training data, overall** | the whole `semisynthetic-v1` pipeline | "
-        "The training arms moved rationale text and left decisions untouched, and the causes "
-        "trace to the data more than to the optimiser: overt negatives against covert bias; "
+        "Training did learn attribute invariance (HF + PEFT: margin spread across variants "
+        "-51% on unseen benchmark sets; the earlier 'no effect' reading was a vLLM LoRA audit "
+        "artefact), but the data limits how far it can go: overt negatives against covert bias; "
         "SFT targets that ~80% agree with what the model already decides; 57% unique "
         "completions; a teacher pool 89% reject against a 34%-hire benchmark; a biased-pass "
         "yield of 55.6% / 36.8% (en / uk) with DPO pairs 18k military vs 5k religion; and a "

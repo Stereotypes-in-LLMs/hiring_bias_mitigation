@@ -116,15 +116,6 @@
     "reference_agreement": 0.8147892720306513,
     "n_tests": 84
   },
-  "Qwen3.5-4B--en--sft--adapter--en_only": {
-    "model": "Qwen/Qwen3.5-4B",
-    "lang": "en",
-    "mitigation": "sft",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.2803220611916264,
-    "reference_agreement": 0.8076650563607085,
-    "n_tests": 204
-  },
   "Qwen3.5-4B--uk--baseline": {
     "model": "Qwen/Qwen3.5-4B",
     "lang": "uk",
@@ -224,15 +215,6 @@
     "reference_agreement": 0.7451207729468599,
     "n_tests": 204
   },
-  "Qwen3.5-4B--uk--sft--adapter--uk_only": {
-    "model": "Qwen/Qwen3.5-4B",
-    "lang": "uk",
-    "mitigation": "sft",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.19355877616747183,
-    "reference_agreement": 0.7490499194847021,
-    "n_tests": 204
-  },
   "Qwen3.5-9B--en--baseline": {
     "model": "Qwen/Qwen3.5-9B",
     "lang": "en",
@@ -241,24 +223,6 @@
     "population_acceptance_rate": 0.1409718353450944,
     "reference_agreement": 0.7802042711234912,
     "n_tests": 1074
-  },
-  "Qwen3.5-9B--en--dpo--adapter--en_only_dpo_decision": {
-    "model": "Qwen/Qwen3.5-9B",
-    "lang": "en",
-    "mitigation": "dpo",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.1575523349436393,
-    "reference_agreement": 0.7891787439613527,
-    "n_tests": 204
-  },
-  "Qwen3.5-9B--en--dpo--adapter--en_only_dpo_v2_ckpt50": {
-    "model": "Qwen/Qwen3.5-9B",
-    "lang": "en",
-    "mitigation": "dpo",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.15710144927536232,
-    "reference_agreement": 0.7889855072463768,
-    "n_tests": 204
   },
   "Qwen3.5-9B--en--embedding--leace": {
     "model": "Qwen/Qwen3.5-9B",
@@ -358,24 +322,6 @@
     "population_acceptance_rate": 0.18037037037037038,
     "reference_agreement": 0.8077777777777778,
     "n_tests": 15
-  },
-  "Qwen3.5-9B--en--sft--adapter--en_only": {
-    "model": "Qwen/Qwen3.5-9B",
-    "lang": "en",
-    "mitigation": "sft",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.15784219001610306,
-    "reference_agreement": 0.7894041867954912,
-    "n_tests": 204
-  },
-  "Qwen3.5-9B--en--sft--adapter--en_only_v2_ckpt250": {
-    "model": "Qwen/Qwen3.5-9B",
-    "lang": "en",
-    "mitigation": "sft",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.1570048309178744,
-    "reference_agreement": 0.78914653784219,
-    "n_tests": 204
   },
   "Qwen3.5-9B--uk--baseline": {
     "model": "Qwen/Qwen3.5-9B",
@@ -483,15 +429,6 @@
     "n_prompts": 31050,
     "population_acceptance_rate": 0.2965312892524719,
     "reference_agreement": 0.8064027826983156,
-    "n_tests": 204
-  },
-  "Qwen3.5-9B--uk--sft--adapter--uk_only": {
-    "model": "Qwen/Qwen3.5-9B",
-    "lang": "uk",
-    "mitigation": "sft",
-    "n_prompts": 31050,
-    "population_acceptance_rate": 0.29500805152979065,
-    "reference_agreement": 0.8050241545893719,
     "n_tests": 204
   },
   "gemma-4-12B-it--en--baseline": {

@@ -1,11 +1,11 @@
 # Hiring Bias Mitigation — Results
 
-*Generated 2026-09-19 12:35 from `eval/results/` by `scripts/make_report.py`. Do not edit by hand.*
+*Generated 2026-09-19 16:50 from `eval/results/` by `scripts/make_report.py`. Do not edit by hand.*
 
 **Models:** Qwen3.5-4B, Qwen3.5-9B, gemma-4-12B-it, gemma-4-E4B-it, lapa-v0.1.2-instruct  
 **Languages:** en, uk  
 **Protected groups:** military_status, gender, religion (+ intersections: military_status_x_gender, military_status_x_religion)  
-**Runs:** 61
+**Runs:** 54
 
 **How to read every metric in this report: [`docs/METRICS.md`](../docs/METRICS.md)** — definitions, how to read each number, and what each one does not capture.
 
@@ -30,7 +30,6 @@ Decoding is reported for every run (audit-study reporting requirement 5). Greedy
 | `Qwen3.5-4B--en--prompt--zero_shot_cot` | Qwen3.5-4B | en | prompt | zero_shot_cot | 13,050 | greedy | 42 |
 | `Qwen3.5-4B--en--scrub--lexical` | Qwen3.5-4B | en | scrub | lexical | 13,050 | greedy | 42 |
 | `Qwen3.5-4B--en--scrub--llm` | Qwen3.5-4B | en | scrub | llm | 13,050 | greedy | 42 |
-| `Qwen3.5-4B--en--sft--adapter--en_only` | Qwen3.5-4B | en | sft | adapter | 31,050 | greedy | 42 |
 | `Qwen3.5-4B--uk--baseline` | Qwen3.5-4B | uk | none | -- | 161,550 | greedy | 42 |
 | `Qwen3.5-4B--uk--prompt--counterfactual_invariance` | Qwen3.5-4B | uk | prompt | counterfactual_invariance | 31,050 | greedy | 42 |
 | `Qwen3.5-4B--uk--prompt--fairness_constitution` | Qwen3.5-4B | uk | prompt | fairness_constitution | 31,050 | greedy | 42 |
@@ -42,10 +41,7 @@ Decoding is reported for every run (audit-study reporting requirement 5). Greedy
 | `Qwen3.5-4B--uk--prompt--zero_shot_cot` | Qwen3.5-4B | uk | prompt | zero_shot_cot | 31,050 | greedy | 42 |
 | `Qwen3.5-4B--uk--scrub--lexical` | Qwen3.5-4B | uk | scrub | lexical | 31,050 | greedy | 42 |
 | `Qwen3.5-4B--uk--scrub--llm` | Qwen3.5-4B | uk | scrub | llm | 31,050 | greedy | 42 |
-| `Qwen3.5-4B--uk--sft--adapter--uk_only` | Qwen3.5-4B | uk | sft | adapter | 31,050 | greedy | 42 |
 | `Qwen3.5-9B--en--baseline` | Qwen3.5-9B | en | none | -- | 161,550 | greedy | 42 |
-| `Qwen3.5-9B--en--dpo--adapter--en_only_dpo_decision` | Qwen3.5-9B | en | dpo | adapter | 31,050 | greedy | 42 |
-| `Qwen3.5-9B--en--dpo--adapter--en_only_dpo_v2_ckpt50` | Qwen3.5-9B | en | dpo | adapter | 31,050 | greedy | 42 |
 | `Qwen3.5-9B--en--embedding--leace` | Qwen3.5-9B | en | embedding | leace | 2,700 | greedy | 42 |
 | `Qwen3.5-9B--en--prompt--counterfactual_invariance` | Qwen3.5-9B | en | prompt | counterfactual_invariance | 2,700 | greedy | 42 |
 | `Qwen3.5-9B--en--prompt--fairness_constitution` | Qwen3.5-9B | en | prompt | fairness_constitution | 2,700 | greedy | 42 |
@@ -57,8 +53,6 @@ Decoding is reported for every run (audit-study reporting requirement 5). Greedy
 | `Qwen3.5-9B--en--prompt--zero_shot_cot` | Qwen3.5-9B | en | prompt | zero_shot_cot | 2,700 | greedy | 42 |
 | `Qwen3.5-9B--en--scrub--lexical` | Qwen3.5-9B | en | scrub | lexical | 2,700 | greedy | 42 |
 | `Qwen3.5-9B--en--scrub--llm` | Qwen3.5-9B | en | scrub | llm | 2,700 | greedy | 42 |
-| `Qwen3.5-9B--en--sft--adapter--en_only` | Qwen3.5-9B | en | sft | adapter | 31,050 | greedy | 42 |
-| `Qwen3.5-9B--en--sft--adapter--en_only_v2_ckpt250` | Qwen3.5-9B | en | sft | adapter | 31,050 | greedy | 42 |
 | `Qwen3.5-9B--uk--baseline` | Qwen3.5-9B | uk | none | -- | 161,550 | greedy | 42 |
 | `Qwen3.5-9B--uk--embedding--leace` | Qwen3.5-9B | uk | embedding | leace | 31,050 | greedy | 42 |
 | `Qwen3.5-9B--uk--prompt--counterfactual_invariance` | Qwen3.5-9B | uk | prompt | counterfactual_invariance | 31,050 | greedy | 42 |
@@ -71,7 +65,6 @@ Decoding is reported for every run (audit-study reporting requirement 5). Greedy
 | `Qwen3.5-9B--uk--prompt--zero_shot_cot` | Qwen3.5-9B | uk | prompt | zero_shot_cot | 31,050 | greedy | 42 |
 | `Qwen3.5-9B--uk--scrub--lexical` | Qwen3.5-9B | uk | scrub | lexical | 31,050 | greedy | 42 |
 | `Qwen3.5-9B--uk--scrub--llm` | Qwen3.5-9B | uk | scrub | llm | 31,050 | greedy | 42 |
-| `Qwen3.5-9B--uk--sft--adapter--uk_only` | Qwen3.5-9B | uk | sft | adapter | 31,050 | greedy | 42 |
 | `gemma-4-12B-it--en--baseline` | gemma-4-12B-it | en | none | -- | 161,550 | greedy | 42 |
 | `gemma-4-12B-it--uk--baseline` | gemma-4-12B-it | uk | none | -- | 161,550 | greedy | 42 |
 | `gemma-4-E4B-it--en--baseline` | gemma-4-E4B-it | en | none | -- | 161,550 | greedy | 42 |
@@ -200,24 +193,6 @@ Baseline values are in brackets where a matching unmitigated run exists; **↓ m
 | Qwen3.5-4B | en | scrub · llm | military_status | implicit | 5 | 1.0 (4.5) | 4.2 (17.6) | 0.057 (0.109) | 3.8 (6.2) | 8.0 (32.7) | 0.689 (0.672) | 82.0 (80.8) | 0.0 (0.0) |
 | Qwen3.5-4B | en | scrub · llm | religion | explicit | 9 | 0.1 (1.3) | 0.4 (6.0) | 0.005 (0.029) | 0.2 (3.1) | 0.7 (11.3) | 0.696 (0.692) | 83.4 (81.9) | 0.0 (0.0) |
 | Qwen3.5-4B | en | scrub · llm | religion | implicit | 9 | 2.8 (3.7) | 11.8 (15.1) | 0.113 (0.169) | 4.1 (4.3) | 26.7 (35.3) | 0.645 (0.629) | 78.2 (77.4) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | gender | explicit | 20 | 1.1 (1.1) | 6.4 (6.4) | 0.023 (0.025) | 2.5 (2.5) | 8.7 (8.0) | 0.692 (0.692) | 82.0 (82.0) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | gender | implicit | 20 | 0.8 (0.8) | 4.0 (3.8) | 0.020 (0.018) | 2.1 (2.1) | 6.0 (6.0) | 0.694 (0.694) | 80.7 (80.7) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | military_status | explicit | 5 | 5.3 (5.3) | 21.3 (21.3) | 0.104 (0.104) | 6.6 (6.6) | 27.3 (27.3) | 0.669 (0.669) | 80.0 (80.0) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | military_status | implicit | 5 | 4.6 (4.5) | 17.8 (17.6) | 0.113 (0.109) | 6.4 (6.2) | 33.3 (32.7) | 0.672 (0.672) | 80.8 (80.8) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | religion | explicit | 9 | 1.3 (1.3) | 5.6 (6.0) | 0.028 (0.029) | 3.1 (3.1) | 10.7 (11.3) | 0.693 (0.692) | 82.0 (81.9) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | religion | implicit | 9 | 3.7 (3.7) | 15.3 (15.1) | 0.167 (0.169) | 4.3 (4.3) | 36.0 (35.3) | 0.630 (0.629) | 77.3 (77.4) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | gender | explicit | 20 | 1.0 (1.1) | 4.7 (4.0) | 0.039 (0.041) | 1.9 (1.8) | 11.3 (10.0) | 0.677 (0.677) | 81.8 (81.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | gender | implicit | 20 | 0.6 (0.6) | 3.3 (4.0) | 0.044 (0.045) | 1.1 (1.2) | 7.3 (8.7) | 0.670 (0.671) | 79.6 (79.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | military_status | explicit | 5 | 2.4 (2.4) | 5.8 (5.8) | 0.051 (0.051) | 2.5 (2.5) | 11.3 (11.3) | 0.677 (0.677) | 82.4 (82.4) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | military_status | implicit | 5 | 3.8 (3.9) | 12.0 (12.2) | 0.135 (0.135) | 3.9 (3.8) | 32.0 (32.7) | 0.642 (0.643) | 74.5 (74.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | religion | explicit | 9 | 0.9 (0.7) | 2.2 (2.4) | 0.033 (0.028) | 1.5 (1.5) | 6.7 (4.7) | 0.675 (0.675) | 80.9 (80.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | religion | implicit | 9 | 1.9 (1.9) | 8.9 (8.9) | 0.160 (0.161) | 2.0 (1.9) | 24.7 (24.7) | 0.604 (0.605) | 69.5 (69.5) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | gender | explicit | 20 | 0.9 (1.1) | 3.8 (4.0) | 0.038 (0.041) | 1.7 (1.8) | 9.3 (10.0) | 0.676 (0.677) | 81.7 (81.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | gender | implicit | 20 | 0.6 (0.6) | 3.8 (4.0) | 0.048 (0.045) | 1.1 (1.2) | 8.7 (8.7) | 0.671 (0.671) | 79.6 (79.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | military_status | explicit | 5 | 2.3 (2.4) | 5.8 (5.8) | 0.050 (0.051) | 2.4 (2.5) | 11.3 (11.3) | 0.677 (0.677) | 82.5 (82.4) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | military_status | implicit | 5 | 3.9 (3.9) | 12.4 (12.2) | 0.137 (0.135) | 3.9 (3.8) | 33.3 (32.7) | 0.642 (0.643) | 74.5 (74.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | religion | explicit | 9 | 0.7 (0.7) | 2.0 (2.4) | 0.029 (0.028) | 1.4 (1.5) | 6.0 (4.7) | 0.675 (0.675) | 80.7 (80.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | religion | implicit | 9 | 1.8 (1.9) | 8.2 (8.9) | 0.158 (0.161) | 1.9 (1.9) | 24.0 (24.7) | 0.604 (0.605) | 69.5 (69.5) | 0.0 (0.0) |
 | Qwen3.5-9B | en | embedding · leace | military_status | implicit | 5 | 3.4 (3.9) | 9.8 (12.2) | 0.149 (0.135) | 3.5 (3.8) | 27.3 (32.7) | 0.631 (0.643) | 72.4 (74.6) | 0.0 (0.0) |
 | Qwen3.5-9B | en | prompt · counterfactual_invariance | military_status | implicit | 5 | 2.7 (3.9) | 7.8 (12.2) | 0.108 (0.135) | 2.9 (3.8) | 20.7 (32.7) | 0.651 (0.643) | 74.5 (74.6) | 0.0 (0.0) |
 | Qwen3.5-9B | en | prompt · fairness_constitution | military_status | implicit | 5 | 2.7 (3.9) | 8.7 (12.2) | 0.107 (0.135) | 3.7 (3.8) | 12.7 (32.7) | 0.689 (0.643) | 83.8 (74.6) | 0.0 (0.0) |
@@ -229,18 +204,6 @@ Baseline values are in brackets where a matching unmitigated run exists; **↓ m
 | Qwen3.5-9B | en | prompt · zero_shot_cot | military_status | implicit | 5 | 4.2 (3.9) | 11.8 (12.2) | 0.148 (0.135) | 4.2 (3.8) | 32.0 (32.7) | 0.655 (0.643) | 75.7 (74.6) | 0.0 (0.0) |
 | Qwen3.5-9B | en | scrub · lexical | military_status | implicit | 5 | 0.0 (3.9) | 0.0 (12.2) | 0.000 (0.135) | 0.0 (3.8) | 0.0 (32.7) | 0.672 (0.643) | 80.2 (74.6) | 0.0 (0.0) |
 | Qwen3.5-9B | en | scrub · llm | military_status | implicit | 5 | 0.7 (3.9) | 2.7 (12.2) | 0.024 (0.135) | 2.7 (3.8) | 6.7 (32.7) | 0.672 (0.643) | 80.6 (74.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | gender | explicit | 20 | 0.9 (1.1) | 4.2 (4.0) | 0.036 (0.041) | 1.7 (1.8) | 10.7 (10.0) | 0.677 (0.677) | 81.8 (81.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | gender | implicit | 20 | 0.6 (0.6) | 3.6 (4.0) | 0.044 (0.045) | 1.1 (1.2) | 8.0 (8.7) | 0.671 (0.671) | 79.6 (79.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | military_status | explicit | 5 | 2.4 (2.4) | 5.8 (5.8) | 0.051 (0.051) | 2.5 (2.5) | 11.3 (11.3) | 0.677 (0.677) | 82.4 (82.4) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | military_status | implicit | 5 | 3.9 (3.9) | 12.2 (12.2) | 0.136 (0.135) | 3.8 (3.8) | 32.7 (32.7) | 0.643 (0.643) | 74.5 (74.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | religion | explicit | 9 | 0.8 (0.7) | 2.2 (2.4) | 0.028 (0.028) | 1.5 (1.5) | 5.3 (4.7) | 0.674 (0.675) | 80.9 (80.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | religion | implicit | 9 | 1.9 (1.9) | 8.9 (8.9) | 0.164 (0.161) | 2.0 (1.9) | 24.7 (24.7) | 0.605 (0.605) | 69.6 (69.5) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | gender | explicit | 20 | 1.1 (1.1) | 4.0 (4.0) | 0.041 (0.041) | 1.8 (1.8) | 10.0 (10.0) | 0.677 (0.677) | 81.8 (81.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | gender | implicit | 20 | 0.6 (0.6) | 4.0 (4.0) | 0.045 (0.045) | 1.2 (1.2) | 8.7 (8.7) | 0.671 (0.671) | 79.6 (79.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | military_status | explicit | 5 | 2.4 (2.4) | 5.8 (5.8) | 0.051 (0.051) | 2.5 (2.5) | 11.3 (11.3) | 0.677 (0.677) | 82.4 (82.4) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | military_status | implicit | 5 | 3.9 (3.9) | 12.2 (12.2) | 0.135 (0.135) | 3.8 (3.8) | 32.7 (32.7) | 0.643 (0.643) | 74.6 (74.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | religion | explicit | 9 | 0.7 (0.7) | 2.4 (2.4) | 0.028 (0.028) | 1.5 (1.5) | 4.7 (4.7) | 0.675 (0.675) | 80.8 (80.8) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | religion | implicit | 9 | 1.9 (1.9) | 8.9 (8.9) | 0.161 (0.161) | 1.9 (1.9) | 24.7 (24.7) | 0.605 (0.605) | 69.5 (69.5) | 0.0 (0.0) |
 | Qwen3.5-4B | uk | none | gender | explicit | 20 | 4.1 | 22.9 | 0.104 | 5.2 | 40.5 | 0.613 | 75.2 | 0.0 |
 | Qwen3.5-4B | uk | none | gender | implicit | 20 | 2.6 | 11.1 | 0.082 | 3.0 | 22.8 | 0.616 | 74.8 | 0.0 |
 | Qwen3.5-4B | uk | none | military_status | explicit | 5 | 8.2 | 33.1 | 0.181 | 8.7 | 44.3 | 0.587 | 74.2 | 0.0 |
@@ -351,12 +314,6 @@ Baseline values are in brackets where a matching unmitigated run exists; **↓ m
 | Qwen3.5-4B | uk | scrub · llm | military_status | implicit | 5 | 0.8 (4.9) | 2.9 (14.7) | 0.035 (0.112) | 2.2 (5.8) | 5.1 (28.5) | 0.614 (0.603) | 75.4 (75.1) | 0.0 (0.0) |
 | Qwen3.5-4B | uk | scrub · llm | religion | explicit | 9 | 0.1 (2.4) | 0.4 (7.6) | 0.006 (0.052) | 0.4 (3.5) | 1.9 (12.0) | 0.614 (0.612) | 75.1 (76.2) | 0.0 (0.0) |
 | Qwen3.5-4B | uk | scrub · llm | religion | implicit | 9 | 1.5 (2.4) | 6.0 (10.4) | 0.044 (0.075) | 3.2 (3.3) | 11.4 (21.5) | 0.599 (0.589) | 74.2 (73.4) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | gender | explicit | 20 | 4.2 (4.1) | 22.7 (22.9) | 0.101 (0.104) | 5.2 (5.2) | 40.5 (40.5) | 0.613 (0.613) | 75.2 (75.2) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | gender | implicit | 20 | 2.6 (2.6) | 11.1 (11.1) | 0.079 (0.082) | 3.0 (3.0) | 22.8 (22.8) | 0.616 (0.616) | 74.8 (74.8) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | military_status | explicit | 5 | 8.2 (8.2) | 33.1 (33.1) | 0.181 (0.181) | 8.7 (8.7) | 44.3 (44.3) | 0.587 (0.587) | 74.2 (74.2) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | military_status | implicit | 5 | 4.9 (4.9) | 14.7 (14.7) | 0.112 (0.112) | 5.8 (5.8) | 28.5 (28.5) | 0.603 (0.603) | 75.1 (75.1) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | religion | explicit | 9 | 2.4 (2.4) | 8.2 (7.6) | 0.059 (0.052) | 3.5 (3.5) | 12.0 (12.0) | 0.612 (0.612) | 76.2 (76.2) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | religion | implicit | 9 | 2.6 (2.4) | 10.7 (10.4) | 0.080 (0.075) | 3.4 (3.3) | 22.8 (21.5) | 0.590 (0.589) | 73.6 (73.4) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | embedding · leace | gender | explicit | 20 | 4.5 (3.7) | 37.3 (30.4) | 0.112 (0.095) | 4.2 (4.4) | 33.5 (56.3) | 0.620 (0.616) | 73.5 (80.1) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | embedding · leace | gender | implicit | 20 | 2.9 (2.3) | 13.0 (9.8) | 0.136 (0.087) | 2.8 (3.3) | 8.7 (17.7) | 0.635 (0.636) | 76.5 (83.0) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | embedding · leace | military_status | explicit | 5 | 5.0 (7.7) | 13.2 (18.2) | 0.164 (0.149) | 3.7 (7.2) | 4.2 (15.8) | 0.558 (0.583) | 60.9 (77.7) | 0.0 (0.0) |
@@ -423,12 +380,6 @@ Baseline values are in brackets where a matching unmitigated run exists; **↓ m
 | Qwen3.5-9B | uk | scrub · llm | military_status | implicit | 5 | 0.4 (5.4) | 0.9 (14.9) | 0.010 (0.112) | 3.8 (6.1) | 3.2 (24.1) | 0.621 (0.597) | 82.2 (79.3) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | scrub · llm | religion | explicit | 9 | 0.2 (1.6) | 0.7 (6.2) | 0.007 (0.040) | 0.1 (2.8) | 1.3 (8.9) | 0.623 (0.624) | 80.5 (81.1) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | scrub · llm | religion | implicit | 9 | 2.0 (4.4) | 9.6 (18.9) | 0.045 (0.130) | 5.6 (5.1) | 18.4 (44.3) | 0.600 (0.571) | 79.0 (77.3) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | gender | explicit | 20 | 3.8 (3.7) | 30.9 (30.4) | 0.093 (0.095) | 4.5 (4.4) | 57.0 (56.3) | 0.616 (0.616) | 80.1 (80.1) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | gender | implicit | 20 | 2.2 (2.3) | 10.0 (9.8) | 0.081 (0.087) | 3.2 (3.3) | 17.7 (17.7) | 0.635 (0.636) | 83.1 (83.0) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | military_status | explicit | 5 | 7.7 (7.7) | 18.2 (18.2) | 0.149 (0.149) | 7.2 (7.2) | 15.8 (15.8) | 0.583 (0.583) | 77.7 (77.7) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | military_status | implicit | 5 | 5.2 (5.4) | 14.7 (14.9) | 0.111 (0.112) | 6.0 (6.1) | 24.1 (24.1) | 0.597 (0.597) | 79.6 (79.3) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | religion | explicit | 9 | 1.5 (1.6) | 6.0 (6.2) | 0.037 (0.040) | 2.8 (2.8) | 10.1 (8.9) | 0.623 (0.624) | 81.1 (81.1) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | religion | implicit | 9 | 4.4 (4.4) | 18.9 (18.9) | 0.126 (0.130) | 5.1 (5.1) | 44.9 (44.3) | 0.571 (0.571) | 77.2 (77.3) | 0.0 (0.0) |
 
 ### Roll-up — one row per run
 
@@ -453,9 +404,6 @@ For ranking experiments against each other, nothing more. Groups are weighted **
 | Qwen3.5-4B | en | prompt · zero_shot_cot | 2.7 (3.1) | 10.8 (14.3) | 0.094 (0.082) | 3.5 (4.5) | 23.8 (24.1) | 0.680 (0.677) | 80.0 (80.6) | 0.0 (0.0) |
 | Qwen3.5-4B | en | scrub · lexical | 0.1 (3.1) | 0.2 (14.3) | 0.002 (0.082) | 0.1 (4.5) | 0.3 (24.1) | 0.698 (0.677) | 83.4 (80.6) | 0.0 (0.0) |
 | Qwen3.5-4B | en | scrub · llm | 1.0 (3.1) | 4.2 (14.3) | 0.044 (0.082) | 2.1 (4.5) | 8.8 (24.1) | 0.679 (0.677) | 81.5 (80.6) | 0.0 (0.0) |
-| Qwen3.5-4B | en | sft · adapter | 2.8 (3.1) | 11.7 (14.3) | 0.076 (0.082) | 4.2 (4.5) | 20.3 (24.1) | 0.681 (0.677) | 80.8 (80.6) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | 1.8 (1.9) | 6.1 (7.8) | 0.077 (0.078) | 2.1 (2.4) | 15.6 (19.7) | 0.663 (0.662) | 78.9 (78.0) | 0.0 (0.0) |
-| Qwen3.5-9B | en | dpo · adapter | 1.7 (1.9) | 6.0 (7.8) | 0.077 (0.078) | 2.1 (2.4) | 15.4 (19.7) | 0.663 (0.662) | 78.9 (78.0) | 0.0 (0.0) |
 | Qwen3.5-9B | en | embedding · leace | 3.4 (1.9) | 9.8 (7.8) | 0.149 (0.078) | 3.5 (2.4) | 27.3 (19.7) | 0.634 (0.662) | 73.1 (78.0) | 0.0 (0.0) |
 | Qwen3.5-9B | en | prompt · counterfactual_invariance | 2.7 (1.9) | 7.8 (7.8) | 0.108 (0.078) | 2.9 (2.4) | 20.7 (19.7) | 0.653 (0.662) | 74.9 (78.0) | 0.0 (0.0) |
 | Qwen3.5-9B | en | prompt · fairness_constitution | 2.7 (1.9) | 8.7 (7.8) | 0.107 (0.078) | 3.7 (2.4) | 12.7 (19.7) | 0.689 (0.662) | 83.9 (78.0) | 0.0 (0.0) |
@@ -467,8 +415,6 @@ For ranking experiments against each other, nothing more. Groups are weighted **
 | Qwen3.5-9B | en | prompt · zero_shot_cot | 4.2 (1.9) | 11.8 (7.8) | 0.148 (0.078) | 4.2 (2.4) | 32.0 (19.7) | 0.659 (0.662) | 76.4 (78.0) | 0.0 (0.0) |
 | Qwen3.5-9B | en | scrub · lexical | 0.0 (1.9) | 0.0 (7.8) | 0.000 (0.078) | 0.0 (2.4) | 0.0 (19.7) | 0.672 (0.662) | 80.3 (78.0) | 0.0 (0.0) |
 | Qwen3.5-9B | en | scrub · llm | 0.7 (1.9) | 2.7 (7.8) | 0.024 (0.078) | 2.7 (2.4) | 6.7 (19.7) | 0.673 (0.662) | 80.8 (78.0) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | 1.7 (1.9) | 6.1 (7.8) | 0.076 (0.078) | 2.1 (2.4) | 15.4 (19.7) | 0.663 (0.662) | 78.9 (78.0) | 0.0 (0.0) |
-| Qwen3.5-9B | en | sft · adapter | 1.7 (1.9) | 6.2 (7.8) | 0.077 (0.078) | 2.1 (2.4) | 15.3 (19.7) | 0.663 (0.662) | 78.9 (78.0) | 0.0 (0.0) |
 | Qwen3.5-4B | uk | none | 4.3 | 20.0 | 0.110 | 5.4 | 34.6 | 0.601 | 74.8 | 0.0 |
 | Qwen3.5-9B | uk | none | 4.3 | 20.3 | 0.112 | 5.2 | 32.2 | 0.601 | 79.5 | 0.0 |
 | gemma-4-12B-it | uk | none | 1.6 | 7.7 | 0.050 | 2.4 | 10.9 | 0.612 | 84.4 | 0.0 |
@@ -484,7 +430,6 @@ For ranking experiments against each other, nothing more. Groups are weighted **
 | Qwen3.5-4B | uk | prompt · zero_shot_cot | 2.5 (4.3) | 10.2 (20.0) | 0.073 (0.110) | 3.0 (5.4) | 20.5 (34.6) | 0.615 (0.601) | 73.0 (74.8) | 0.0 (0.0) |
 | Qwen3.5-4B | uk | scrub · lexical | 0.1 (4.3) | 0.5 (20.0) | 0.005 (0.110) | 0.2 (5.4) | 0.7 (34.6) | 0.613 (0.601) | 75.4 (74.8) | 0.0 (0.0) |
 | Qwen3.5-4B | uk | scrub · llm | 0.6 (4.3) | 2.6 (20.0) | 0.020 (0.110) | 1.4 (5.4) | 5.3 (34.6) | 0.611 (0.601) | 74.5 (74.8) | 0.0 (0.0) |
-| Qwen3.5-4B | uk | sft · adapter | 4.1 (4.3) | 16.7 (20.0) | 0.102 (0.110) | 4.9 (5.4) | 28.5 (34.6) | 0.608 (0.601) | 74.9 (74.8) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | embedding · leace | 4.4 (4.3) | 20.7 (20.3) | 0.123 (0.112) | 4.1 (5.2) | 15.6 (32.2) | 0.615 (0.601) | 74.3 (79.5) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | prompt · counterfactual_invariance | 3.3 (4.3) | 12.5 (20.3) | 0.084 (0.112) | 4.3 (5.2) | 17.6 (32.2) | 0.617 (0.601) | 79.9 (79.5) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | prompt · fairness_constitution | 2.5 (4.3) | 10.5 (20.3) | 0.063 (0.112) | 3.9 (5.2) | 12.3 (32.2) | 0.650 (0.601) | 79.9 (79.5) | 0.0 (0.0) |
@@ -496,7 +441,6 @@ For ranking experiments against each other, nothing more. Groups are weighted **
 | Qwen3.5-9B | uk | prompt · zero_shot_cot | 3.8 (4.3) | 15.8 (20.3) | 0.094 (0.112) | 4.5 (5.2) | 28.6 (32.2) | 0.631 (0.601) | 81.0 (79.5) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | scrub · lexical | 0.1 (4.3) | 0.3 (20.3) | 0.003 (0.112) | 0.1 (5.2) | 0.7 (32.2) | 0.629 (0.601) | 81.7 (79.5) | 0.0 (0.0) |
 | Qwen3.5-9B | uk | scrub · llm | 0.5 (4.3) | 2.4 (20.3) | 0.015 (0.112) | 2.1 (5.2) | 5.0 (32.2) | 0.620 (0.601) | 80.6 (79.5) | 0.0 (0.0) |
-| Qwen3.5-9B | uk | sft · adapter | 4.1 (4.3) | 16.4 (20.3) | 0.099 (0.112) | 4.8 (5.2) | 28.3 (32.2) | 0.613 (0.601) | 80.5 (79.5) | 0.0 (0.0) |
 
 ## 3. Baseline audit — disparity before mitigation
 
@@ -2594,9 +2538,6 @@ Each row is one mitigated run against its own unmitigated baseline (same model, 
 | Qwen3.5-4B | en | prompt | zero_shot_cot | 4 | 2.7 (3.7) | -1.0 | 9.1 (13.8) | 0.094 (0.103) | 3.5 (5.0) | 0.679 (0.664) | 80.0 (79.9) | 0.0 (0.0) | 5.9 (6.9) | +2 (6→8) | -1 (7→6) |
 | Qwen3.5-4B | en | scrub | lexical | 4 | 0.1 (3.7) | -3.6 | 0.2 (13.8) | 0.002 (0.103) | 0.1 (5.0) | 0.698 (0.664) | 83.5 (79.9) | 0.0 (0.0) | 0.0 (6.9) | -6 (6→0) | -7 (7→0) |
 | Qwen3.5-4B | en | scrub | llm | 4 | 1.0 (3.7) | -2.7 | 8.9 (13.8) | 0.044 (0.103) | 2.1 (5.0) | 0.678 (0.664) | 81.4 (79.9) | 0.0 (0.0) | 1.4 (6.9) | -4 (6→2) | -6 (7→1) |
-| Qwen3.5-4B | en | sft | adapter | 6 | 2.8 (2.8) | +0.0 | 13.8 (13.8) | 0.076 (0.076) | 4.2 (4.1) | 0.681 (0.681) | 80.7 (80.8) | 0.0 (0.0) | 3.1 (3.1) | +0 (6→6) | +0 (8→8) |
-| Qwen3.5-9B | en | dpo | adapter | 6 | 1.8 (1.7) | +0.0 | 9.6 (9.6) | 0.077 (0.077) | 2.1 (2.1) | 0.662 (0.663) | 78.9 (78.9) | 0.0 (0.0) | 1.1 (1.1) | -2 (4→2) | -1 (3→2) |
-| Qwen3.5-9B | en | dpo | adapter | 6 | 1.7 (1.7) | -0.0 | 9.6 (9.6) | 0.077 (0.077) | 2.1 (2.1) | 0.663 (0.663) | 78.9 (78.9) | 0.0 (0.0) | 1.1 (1.1) | +0 (4→4) | -1 (3→2) |
 | Qwen3.5-9B | en | embedding | leace | 1 | 3.4 (3.9) | -0.5 | 6.9 (9.6) | 0.149 (0.135) | 3.5 (3.8) | 0.631 (0.643) | 72.4 (74.6) | 0.0 (0.0) | 5.1 (8.4) | +1 (2→3) | +0 (1→1) |
 | Qwen3.5-9B | en | prompt | counterfactual_invariance | 1 | 2.7 (3.9) | -1.2 | 7.8 (9.6) | 0.108 (0.135) | 2.9 (3.8) | 0.651 (0.643) | 74.5 (74.6) | 0.0 (0.0) | 0.8 (8.4) | -1 (2→1) | -1 (1→0) |
 | Qwen3.5-9B | en | prompt | fairness_constitution | 1 | 2.7 (3.9) | -1.1 | 8.7 (9.6) | 0.107 (0.135) | 3.7 (3.8) | 0.689 (0.643) | 83.8 (74.6) | 0.0 (0.0) | 0.8 (8.4) | -2 (2→0) | -1 (1→0) |
@@ -2608,8 +2549,6 @@ Each row is one mitigated run against its own unmitigated baseline (same model, 
 | Qwen3.5-9B | en | prompt | zero_shot_cot | 1 | 4.2 (3.9) | +0.3 | 11.8 (9.6) | 0.148 (0.135) | 4.2 (3.8) | 0.655 (0.643) | 75.7 (74.6) | 0.0 (0.0) | 4.9 (8.4) | +1 (2→3) | +2 (1→3) |
 | Qwen3.5-9B | en | scrub | lexical | 1 | 0.0 (3.9) | -3.9 | 0.0 (9.6) | 0.000 (0.135) | 0.0 (3.8) | 0.672 (0.643) | 80.2 (74.6) | 0.0 (0.0) | 0.0 (8.4) | -2 (2→0) | -1 (1→0) |
 | Qwen3.5-9B | en | scrub | llm | 1 | 0.7 (3.9) | -3.2 | 2.7 (9.6) | 0.024 (0.135) | 2.7 (3.8) | 0.672 (0.643) | 80.6 (74.6) | 0.0 (0.0) | 0.1 (8.4) | -2 (2→0) | -1 (1→0) |
-| Qwen3.5-9B | en | sft | adapter | 6 | 1.7 (1.7) | +0.0 | 9.6 (9.6) | 0.076 (0.077) | 2.1 (2.1) | 0.663 (0.663) | 78.9 (78.9) | 0.0 (0.0) | 1.1 (1.1) | -1 (4→3) | -1 (3→2) |
-| Qwen3.5-9B | en | sft | adapter | 6 | 1.7 (1.7) | +0.0 | 9.6 (9.6) | 0.077 (0.077) | 2.1 (2.1) | 0.663 (0.663) | 78.9 (78.9) | 0.0 (0.0) | 1.1 (1.1) | +0 (4→4) | +0 (3→3) |
 | Qwen3.5-4B | uk | prompt | counterfactual_invariance | 6 | 4.0 (4.1) | -0.1 | 19.8 (17.3) | 0.104 (0.101) | 4.8 (4.9) | 0.611 (0.608) | 73.6 (74.9) | 0.0 (0.0) | 1.9 (2.4) | -2 (19→17) | -2 (18→16) |
 | Qwen3.5-4B | uk | prompt | fairness_constitution | 6 | 4.8 (4.1) | +0.7 | 16.4 (17.3) | 0.128 (0.101) | 6.3 (4.9) | 0.617 (0.608) | 74.7 (74.9) | 0.0 (0.0) | 0.9 (2.4) | +4 (19→23) | +2 (18→20) |
 | Qwen3.5-4B | uk | prompt | ignore_personal_info | 6 | 3.0 (4.1) | -1.1 | 13.8 (17.3) | 0.076 (0.101) | 4.1 (4.9) | 0.613 (0.608) | 75.2 (74.9) | 0.0 (0.0) | 0.8 (2.4) | -12 (19→7) | -8 (18→10) |
@@ -2620,7 +2559,6 @@ Each row is one mitigated run against its own unmitigated baseline (same model, 
 | Qwen3.5-4B | uk | prompt | zero_shot_cot | 6 | 2.5 (4.1) | -1.6 | 11.0 (17.3) | 0.073 (0.101) | 3.0 (4.9) | 0.615 (0.608) | 73.0 (74.9) | 0.0 (0.0) | 1.3 (2.4) | -11 (19→8) | -9 (18→9) |
 | Qwen3.5-4B | uk | scrub | lexical | 6 | 0.1 (4.1) | -4.0 | 0.9 (17.3) | 0.005 (0.101) | 0.2 (4.9) | 0.613 (0.608) | 75.4 (74.9) | 0.0 (0.0) | 0.1 (2.4) | -19 (19→0) | -18 (18→0) |
 | Qwen3.5-4B | uk | scrub | llm | 6 | 0.6 (4.1) | -3.5 | 3.6 (17.3) | 0.020 (0.101) | 1.4 (4.9) | 0.611 (0.608) | 74.5 (74.9) | 0.0 (0.0) | 0.5 (2.4) | -19 (19→0) | -18 (18→0) |
-| Qwen3.5-4B | uk | sft | adapter | 6 | 4.1 (4.1) | +0.0 | 17.3 (17.3) | 0.102 (0.101) | 4.9 (4.9) | 0.608 (0.608) | 74.9 (74.9) | 0.0 (0.0) | 2.4 (2.4) | -1 (19→18) | -2 (18→16) |
 | Qwen3.5-9B | uk | embedding | leace | 6 | 4.4 (4.2) | +0.2 | 27.8 (20.0) | 0.123 (0.102) | 4.1 (4.8) | 0.614 (0.613) | 74.2 (80.5) | 0.0 (0.0) | 1.0 (2.4) | -6 (14→8) | -7 (15→8) |
 | Qwen3.5-9B | uk | prompt | counterfactual_invariance | 6 | 3.3 (4.2) | -0.9 | 16.4 (20.0) | 0.084 (0.102) | 4.3 (4.8) | 0.617 (0.613) | 79.9 (80.5) | 0.0 (0.0) | 0.6 (2.4) | -4 (14→10) | -1 (15→14) |
 | Qwen3.5-9B | uk | prompt | fairness_constitution | 6 | 2.5 (4.2) | -1.6 | 14.0 (20.0) | 0.063 (0.102) | 3.9 (4.8) | 0.650 (0.613) | 79.9 (80.5) | 0.0 (0.0) | 0.2 (2.4) | -11 (14→3) | -10 (15→5) |
@@ -2632,7 +2570,6 @@ Each row is one mitigated run against its own unmitigated baseline (same model, 
 | Qwen3.5-9B | uk | prompt | zero_shot_cot | 6 | 3.8 (4.2) | -0.4 | 20.4 (20.0) | 0.094 (0.102) | 4.5 (4.8) | 0.631 (0.613) | 81.0 (80.5) | 0.0 (0.0) | 2.3 (2.4) | -1 (14→13) | -1 (15→14) |
 | Qwen3.5-9B | uk | scrub | lexical | 6 | 0.1 (4.2) | -4.1 | 0.4 (20.0) | 0.003 (0.102) | 0.1 (4.8) | 0.629 (0.613) | 81.7 (80.5) | 0.0 (0.0) | 0.1 (2.4) | -14 (14→0) | -15 (15→0) |
 | Qwen3.5-9B | uk | scrub | llm | 6 | 0.5 (4.2) | -3.6 | 6.1 (20.0) | 0.015 (0.102) | 2.1 (4.8) | 0.620 (0.613) | 80.6 (80.5) | 0.0 (0.0) | 0.2 (2.4) | -14 (14→0) | -14 (15→1) |
-| Qwen3.5-9B | uk | sft | adapter | 6 | 4.1 (4.2) | -0.0 | 20.7 (20.0) | 0.099 (0.102) | 4.8 (4.8) | 0.613 (0.613) | 80.5 (80.5) | 0.0 (0.0) | 2.5 (2.4) | -1 (14→13) | +2 (15→17) |
 
 ## 7. Counterfactual set stability
 
@@ -2646,56 +2583,49 @@ Per-group results are in `reports/set_stability_by_group.csv`.
 
 | Model | Lang | Mitigation | Variant | Sets | Variants/set | Unstable % | Δ pp | 95% CI | Fixed | Broken | p (FDR) |
 |---|---|---|---|---:|---:|---:|---:|---|---:|---:|---:|
-| Qwen3.5-4B | en | embedding | leace | 451 | 14 | 7.3 (13.7) | -6.4 • | [-9.7, -3.4] | 39 | 10 | 6.5e-05 |
-| Qwen3.5-4B | en | prompt | second_pass_verification | 900 | 14 | 8.6 (28.9) | -20.3 • | [-24.1, -16.3] | 243 | 60 | 2.0e-26 |
-| Qwen3.5-4B | en | prompt | structured_rubric | 890 | 14 | 10.7 (29.1) | -18.4 • | [-22.2, -14.6] | 222 | 58 | 4.3e-23 |
-| Qwen3.5-4B | en | prompt | counterfactual_invariance | 899 | 14 | 16.9 (28.9) | -12.0 • | [-15.9, -8.3] | 174 | 66 | 5.1e-12 |
-| Qwen3.5-4B | en | prompt | recruiter_guidelines | 900 | 14 | 17.6 (28.9) | -11.3 • | [-14.4, -8.3] | 154 | 52 | 1.7e-12 |
-| Qwen3.5-4B | en | prompt | fairness_constitution | 900 | 14 | 17.8 (28.9) | -11.1 • | [-13.9, -8.1] | 130 | 30 | 1.6e-15 |
-| Qwen3.5-4B | en | prompt | zero_shot_cot | 900 | 14 | 22.0 (28.9) | -6.9 • | [-10.0, -4.0] | 112 | 50 | 2.3e-06 |
-| Qwen3.5-4B | en | prompt | ignore_personal_info | 900 | 14 | 23.2 (28.9) | -5.7 • | [-8.6, -2.8] | 92 | 41 | 2.1e-05 |
-| Qwen3.5-4B | en | prompt | reasoning | 900 | 14 | 23.7 (28.9) | -5.2 • | [-7.6, -3.0] | 81 | 34 | 2.4e-05 |
-| Qwen3.5-4B | en | scrub | lexical | 900 | 14 | 0.9 (28.9) | -28.0 • | [-31.4, -24.2] | 255 | 3 | 2.0e-70 |
-| Qwen3.5-4B | en | scrub | llm | 900 | 14 | 15.1 (28.9) | -13.8 • | [-16.3, -11.1] | 147 | 23 | 1.1e-22 |
-| Qwen3.5-4B | en | sft | adapter--en_only | 900 | 34 | 30.6 (30.1) | +0.4 | [+0.0, +1.1] | 0 | 4 | 1.6e-01 |
-| Qwen3.5-9B | en | dpo | adapter--en_only_dpo_decision | 900 | 34 | 17.0 (17.3) | -0.3 | [-0.9, +0.1] | 5 | 2 | 5.2e-01 |
-| Qwen3.5-9B | en | dpo | adapter--en_only_dpo_v2_ckpt50 | 900 | 34 | 17.2 (17.3) | -0.1 | [-0.6, +0.3] | 3 | 2 | 1.0e+00 |
-| Qwen3.5-9B | en | embedding | leace | 450 | 5 | 10.9 (13.3) | -2.4 • | [-4.4, -0.4] | 15 | 4 | 2.9e-02 |
-| Qwen3.5-9B | en | prompt | structured_rubric | 450 | 5 | 5.8 (13.3) | -7.6 • | [-11.1, -4.2] | 38 | 4 | 1.2e-07 |
-| Qwen3.5-9B | en | prompt | counterfactual_invariance | 450 | 5 | 10.7 (13.3) | -2.7 | [-5.3, +0.0] | 21 | 9 | 5.7e-02 |
-| Qwen3.5-9B | en | prompt | ignore_personal_info | 450 | 5 | 10.9 (13.3) | -2.4 | [-6.4, +1.6] | 35 | 24 | 2.4e-01 |
-| Qwen3.5-9B | en | prompt | reasoning | 450 | 5 | 11.1 (13.3) | -2.2 • | [-4.0, -0.7] | 13 | 3 | 3.1e-02 |
-| Qwen3.5-9B | en | prompt | recruiter_guidelines | 450 | 5 | 12.2 (13.3) | -1.1 | [-2.9, +0.7] | 12 | 7 | 4.2e-01 |
+| Qwen3.5-4B | en | embedding | leace | 451 | 14 | 7.3 (13.7) | -6.4 • | [-9.7, -3.4] | 39 | 10 | 5.7e-05 |
+| Qwen3.5-4B | en | prompt | second_pass_verification | 900 | 14 | 8.6 (28.9) | -20.3 • | [-24.1, -16.3] | 243 | 60 | 1.8e-26 |
+| Qwen3.5-4B | en | prompt | structured_rubric | 890 | 14 | 10.7 (29.1) | -18.4 • | [-22.2, -14.6] | 222 | 58 | 3.8e-23 |
+| Qwen3.5-4B | en | prompt | counterfactual_invariance | 899 | 14 | 16.9 (28.9) | -12.0 • | [-15.9, -8.3] | 174 | 66 | 4.5e-12 |
+| Qwen3.5-4B | en | prompt | recruiter_guidelines | 900 | 14 | 17.6 (28.9) | -11.3 • | [-14.4, -8.3] | 154 | 52 | 1.5e-12 |
+| Qwen3.5-4B | en | prompt | fairness_constitution | 900 | 14 | 17.8 (28.9) | -11.1 • | [-13.9, -8.1] | 130 | 30 | 1.4e-15 |
+| Qwen3.5-4B | en | prompt | zero_shot_cot | 900 | 14 | 22.0 (28.9) | -6.9 • | [-10.0, -4.0] | 112 | 50 | 2.0e-06 |
+| Qwen3.5-4B | en | prompt | ignore_personal_info | 900 | 14 | 23.2 (28.9) | -5.7 • | [-8.6, -2.8] | 92 | 41 | 1.8e-05 |
+| Qwen3.5-4B | en | prompt | reasoning | 900 | 14 | 23.7 (28.9) | -5.2 • | [-7.6, -3.0] | 81 | 34 | 2.1e-05 |
+| Qwen3.5-4B | en | scrub | lexical | 900 | 14 | 0.9 (28.9) | -28.0 • | [-31.4, -24.2] | 255 | 3 | 1.8e-70 |
+| Qwen3.5-4B | en | scrub | llm | 900 | 14 | 15.1 (28.9) | -13.8 • | [-16.3, -11.1] | 147 | 23 | 1.0e-22 |
+| Qwen3.5-9B | en | embedding | leace | 450 | 5 | 10.9 (13.3) | -2.4 • | [-4.4, -0.4] | 15 | 4 | 2.5e-02 |
+| Qwen3.5-9B | en | prompt | structured_rubric | 450 | 5 | 5.8 (13.3) | -7.6 • | [-11.1, -4.2] | 38 | 4 | 1.0e-07 |
+| Qwen3.5-9B | en | prompt | counterfactual_invariance | 450 | 5 | 10.7 (13.3) | -2.7 • | [-5.3, +0.0] | 21 | 9 | 5.0e-02 |
+| Qwen3.5-9B | en | prompt | ignore_personal_info | 450 | 5 | 10.9 (13.3) | -2.4 | [-6.4, +1.6] | 35 | 24 | 2.1e-01 |
+| Qwen3.5-9B | en | prompt | reasoning | 450 | 5 | 11.1 (13.3) | -2.2 • | [-4.0, -0.7] | 13 | 3 | 2.7e-02 |
+| Qwen3.5-9B | en | prompt | recruiter_guidelines | 450 | 5 | 12.2 (13.3) | -1.1 | [-2.9, +0.7] | 12 | 7 | 3.8e-01 |
 | Qwen3.5-9B | en | prompt | fairness_constitution | 450 | 5 | 13.1 (13.3) | -0.2 | [-6.4, +5.8] | 58 | 57 | 1.0e+00 |
-| Qwen3.5-9B | en | prompt | zero_shot_cot | 450 | 5 | 14.0 (13.3) | +0.7 | [-1.8, +3.1] | 9 | 12 | 6.9e-01 |
-| Qwen3.5-9B | en | prompt | second_pass_verification | 450 | 5 | 18.2 (13.3) | +4.9 • | [+1.8, +8.0] | 13 | 35 | 3.3e-03 |
-| Qwen3.5-9B | en | scrub | lexical | 450 | 5 | 0.0 (13.3) | -13.3 • | [-17.8, -8.9] | 60 | 0 | 7.1e-18 |
-| Qwen3.5-9B | en | scrub | llm | 450 | 5 | 9.1 (13.3) | -4.2 • | [-8.4, +0.0] | 42 | 23 | 3.4e-02 |
-| Qwen3.5-9B | en | sft | adapter--en_only | 900 | 34 | 17.1 (17.3) | -0.2 | [-0.6, +0.0] | 2 | 0 | 5.5e-01 |
-| Qwen3.5-9B | en | sft | adapter--en_only_v2_ckpt250 | 900 | 34 | 17.3 (17.3) | +0.0 | [+0.0, +0.0] | 0 | 0 | nan |
-| Qwen3.5-4B | uk | prompt | structured_rubric | 861 | 34 | 13.9 (37.4) | -23.5 • | [-27.8, -19.2] | 232 | 30 | 6.0e-39 |
-| Qwen3.5-4B | uk | prompt | recruiter_guidelines | 900 | 34 | 22.4 (36.8) | -14.3 • | [-17.7, -11.1] | 148 | 19 | 3.6e-25 |
-| Qwen3.5-4B | uk | prompt | zero_shot_cot | 899 | 34 | 22.8 (36.8) | -14.0 • | [-17.1, -10.9] | 146 | 20 | 4.2e-24 |
-| Qwen3.5-4B | uk | prompt | ignore_personal_info | 900 | 34 | 29.0 (36.8) | -7.8 • | [-10.1, -5.7] | 84 | 14 | 7.1e-13 |
-| Qwen3.5-4B | uk | prompt | reasoning | 900 | 34 | 32.9 (36.8) | -3.9 • | [-6.1, -1.6] | 64 | 29 | 6.0e-04 |
-| Qwen3.5-4B | uk | prompt | counterfactual_invariance | 897 | 34 | 34.9 (36.9) | -2.0 | [-4.7, +0.6] | 62 | 44 | 1.3e-01 |
-| Qwen3.5-4B | uk | prompt | second_pass_verification | 900 | 34 | 35.3 (36.8) | -1.4 | [-4.1, +1.4] | 67 | 54 | 3.3e-01 |
-| Qwen3.5-4B | uk | prompt | fairness_constitution | 898 | 34 | 49.1 (36.6) | +12.5 • | [+7.3, +17.7] | 94 | 206 | 2.1e-10 |
-| Qwen3.5-4B | uk | scrub | lexical | 900 | 34 | 1.3 (36.8) | -35.4 • | [-40.3, -30.7] | 320 | 1 | 3.7e-93 |
-| Qwen3.5-4B | uk | scrub | llm | 900 | 34 | 11.7 (36.8) | -25.1 • | [-29.0, -21.3] | 245 | 19 | 3.9e-50 |
-| Qwen3.5-4B | uk | sft | adapter--uk_only | 900 | 34 | 37.0 (36.8) | +0.2 | [-0.2, +0.7] | 1 | 3 | 6.7e-01 |
-| Qwen3.5-9B | uk | embedding | leace | 376 | 34 | 41.0 (58.0) | -17.0 • | [-24.6, -9.4] | 94 | 30 | 1.5e-08 |
-| Qwen3.5-9B | uk | prompt | fairness_constitution | 898 | 34 | 30.8 (43.1) | -12.2 • | [-17.4, -7.5] | 172 | 62 | 1.0e-12 |
-| Qwen3.5-9B | uk | prompt | structured_rubric | 900 | 34 | 30.9 (43.0) | -12.1 • | [-15.9, -8.2] | 147 | 38 | 8.7e-16 |
-| Qwen3.5-9B | uk | prompt | ignore_personal_info | 900 | 34 | 34.1 (43.0) | -8.9 • | [-11.1, -6.8] | 88 | 8 | 1.4e-17 |
-| Qwen3.5-9B | uk | prompt | counterfactual_invariance | 898 | 34 | 35.5 (43.0) | -7.5 • | [-10.8, -4.1] | 96 | 29 | 3.2e-09 |
-| Qwen3.5-9B | uk | prompt | recruiter_guidelines | 898 | 34 | 37.0 (42.9) | -5.9 • | [-8.6, -3.1] | 85 | 32 | 2.0e-06 |
-| Qwen3.5-9B | uk | prompt | reasoning | 892 | 34 | 39.5 (42.6) | -3.1 • | [-5.5, -0.9] | 56 | 28 | 4.6e-03 |
-| Qwen3.5-9B | uk | prompt | zero_shot_cot | 896 | 34 | 40.6 (43.1) | -2.5 • | [-4.9, +0.1] | 55 | 33 | 3.4e-02 |
-| Qwen3.5-9B | uk | prompt | second_pass_verification | 893 | 34 | 55.4 (42.7) | +12.8 • | [+8.0, +17.5] | 61 | 175 | 1.9e-13 |
-| Qwen3.5-9B | uk | scrub | lexical | 900 | 34 | 1.4 (43.0) | -41.6 • | [-46.8, -36.2] | 376 | 2 | 1.1e-107 |
-| Qwen3.5-9B | uk | scrub | llm | 899 | 34 | 16.2 (42.9) | -26.7 • | [-31.0, -22.2] | 269 | 29 | 6.7e-49 |
-| Qwen3.5-9B | uk | sft | adapter--uk_only | 900 | 34 | 43.3 (43.0) | +0.3 | [-0.3, +1.1] | 3 | 6 | 5.5e-01 |
+| Qwen3.5-9B | en | prompt | zero_shot_cot | 450 | 5 | 14.0 (13.3) | +0.7 | [-1.8, +3.1] | 9 | 12 | 6.8e-01 |
+| Qwen3.5-9B | en | prompt | second_pass_verification | 450 | 5 | 18.2 (13.3) | +4.9 • | [+1.8, +8.0] | 13 | 35 | 2.9e-03 |
+| Qwen3.5-9B | en | scrub | lexical | 450 | 5 | 0.0 (13.3) | -13.3 • | [-17.8, -8.9] | 60 | 0 | 6.2e-18 |
+| Qwen3.5-9B | en | scrub | llm | 450 | 5 | 9.1 (13.3) | -4.2 • | [-8.4, +0.0] | 42 | 23 | 3.0e-02 |
+| Qwen3.5-4B | uk | prompt | structured_rubric | 861 | 34 | 13.9 (37.4) | -23.5 • | [-27.8, -19.2] | 232 | 30 | 5.3e-39 |
+| Qwen3.5-4B | uk | prompt | recruiter_guidelines | 900 | 34 | 22.4 (36.8) | -14.3 • | [-17.7, -11.1] | 148 | 19 | 3.2e-25 |
+| Qwen3.5-4B | uk | prompt | zero_shot_cot | 899 | 34 | 22.8 (36.8) | -14.0 • | [-17.1, -10.9] | 146 | 20 | 3.7e-24 |
+| Qwen3.5-4B | uk | prompt | ignore_personal_info | 900 | 34 | 29.0 (36.8) | -7.8 • | [-10.1, -5.7] | 84 | 14 | 6.2e-13 |
+| Qwen3.5-4B | uk | prompt | reasoning | 900 | 34 | 32.9 (36.8) | -3.9 • | [-6.1, -1.6] | 64 | 29 | 5.2e-04 |
+| Qwen3.5-4B | uk | prompt | counterfactual_invariance | 897 | 34 | 34.9 (36.9) | -2.0 | [-4.7, +0.6] | 62 | 44 | 1.1e-01 |
+| Qwen3.5-4B | uk | prompt | second_pass_verification | 900 | 34 | 35.3 (36.8) | -1.4 | [-4.1, +1.4] | 67 | 54 | 3.0e-01 |
+| Qwen3.5-4B | uk | prompt | fairness_constitution | 898 | 34 | 49.1 (36.6) | +12.5 • | [+7.3, +17.7] | 94 | 206 | 1.8e-10 |
+| Qwen3.5-4B | uk | scrub | lexical | 900 | 34 | 1.3 (36.8) | -35.4 • | [-40.3, -30.7] | 320 | 1 | 3.2e-93 |
+| Qwen3.5-4B | uk | scrub | llm | 900 | 34 | 11.7 (36.8) | -25.1 • | [-29.0, -21.3] | 245 | 19 | 3.4e-50 |
+| Qwen3.5-9B | uk | embedding | leace | 376 | 34 | 41.0 (58.0) | -17.0 • | [-24.6, -9.4] | 94 | 30 | 1.3e-08 |
+| Qwen3.5-9B | uk | prompt | fairness_constitution | 898 | 34 | 30.8 (43.1) | -12.2 • | [-17.4, -7.5] | 172 | 62 | 9.0e-13 |
+| Qwen3.5-9B | uk | prompt | structured_rubric | 900 | 34 | 30.9 (43.0) | -12.1 • | [-15.9, -8.2] | 147 | 38 | 7.7e-16 |
+| Qwen3.5-9B | uk | prompt | ignore_personal_info | 900 | 34 | 34.1 (43.0) | -8.9 • | [-11.1, -6.8] | 88 | 8 | 1.2e-17 |
+| Qwen3.5-9B | uk | prompt | counterfactual_invariance | 898 | 34 | 35.5 (43.0) | -7.5 • | [-10.8, -4.1] | 96 | 29 | 2.8e-09 |
+| Qwen3.5-9B | uk | prompt | recruiter_guidelines | 898 | 34 | 37.0 (42.9) | -5.9 • | [-8.6, -3.1] | 85 | 32 | 1.7e-06 |
+| Qwen3.5-9B | uk | prompt | reasoning | 892 | 34 | 39.5 (42.6) | -3.1 • | [-5.5, -0.9] | 56 | 28 | 4.0e-03 |
+| Qwen3.5-9B | uk | prompt | zero_shot_cot | 896 | 34 | 40.6 (43.1) | -2.5 • | [-4.9, +0.1] | 55 | 33 | 3.0e-02 |
+| Qwen3.5-9B | uk | prompt | second_pass_verification | 893 | 34 | 55.4 (42.7) | +12.8 • | [+8.0, +17.5] | 61 | 175 | 1.6e-13 |
+| Qwen3.5-9B | uk | scrub | lexical | 900 | 34 | 1.4 (43.0) | -41.6 • | [-46.8, -36.2] | 376 | 2 | 1.0e-107 |
+| Qwen3.5-9B | uk | scrub | llm | 899 | 34 | 16.2 (42.9) | -26.7 • | [-31.0, -22.2] | 269 | 29 | 5.9e-49 |
 
 ## 8. Refusals, parse failures and rationale leakage
 
@@ -2746,7 +2676,6 @@ Refusals and unparsable responses are excluded from every fairness statistic, so
 | `Qwen3.5-9B--en--prompt--zero_shot_cot` | 2,700 | 2,700 | 0.0 | 0.0 | 4.1 |
 | `Qwen3.5-9B--en--scrub--lexical` | 2,700 | 2,700 | 0.0 | 0.0 | 0.0 |
 | `Qwen3.5-9B--en--scrub--llm` | 2,700 | 2,700 | 0.0 | 0.0 | 0.1 |
-| `Qwen3.5-9B--en--sft--adapter--en_only` | 31,050 | 31,050 | 0.0 | 0.0 | 1.1 |
 | `Qwen3.5-9B--en--sft--adapter--en_only_v2_ckpt250` | 31,050 | 31,050 | 0.0 | 0.0 | 1.1 |
 | `Qwen3.5-9B--uk--baseline` | 161,550 | 161,550 | 0.0 | 0.0 | 3.0 |
 | `Qwen3.5-9B--uk--embedding--leace` ⚠ | 31,050 | 21,934 | 0.0 | 29.4 | 1.0 |
@@ -2777,10 +2706,10 @@ Sampled rows are in `reports/manual_review/` as CSVs with empty `reviewer_verdic
 | Check | Severity | Rows | Runs |
 |---|---|---:|---:|
 | `refusal_or_parse_failure_skew` | high | 984 | 2 |
-| `language_drift` | high | 9,160 | 19 |
-| `attribute_leakage` | medium | 53,577 | 61 |
+| `language_drift` | high | 9,140 | 18 |
+| `attribute_leakage` | medium | 49,752 | 54 |
 | `degenerate_feedback` | medium | 15 | 1 |
-| `significant_but_tiny` | low | 1,020 | 55 |
+| `significant_but_tiny` | low | 948 | 48 |
 
 **`refusal_or_parse_failure_skew`** — Parse-failure rate differs by more than 10% from the run rate (19.0%) for some attributes. These rows are excluded from every fairness statistic, so the skew changes the denominators -- and is a bias signal in its own right.
 
@@ -2802,7 +2731,13 @@ These runs completed and were scored, and their numbers are **not** in any table
 
 | Run | Model | Lang | Mitigation | Prompts | Parsed | Why it is excluded |
 |---|---|---|---|---:|---:|---|
+| `Qwen3.5-4B--en--sft--adapter--en_only` | Qwen3.5-4B | en | sft · adapter | 31,050 | 31,050 | adapter served through vLLM's LoRA path, which does not reproduce Qwen3.5 adapters; superseded by the merged-weight re-audit |
 | `Qwen3.5-4B--uk--embedding--leace` | Qwen3.5-4B | uk | embedding · leace | 31,050 | 4 | 100.0% of responses could not be parsed (only 4 of 31,050 decided) |
+| `Qwen3.5-4B--uk--sft--adapter--uk_only` | Qwen3.5-4B | uk | sft · adapter | 31,050 | 31,050 | adapter served through vLLM's LoRA path, which does not reproduce Qwen3.5 adapters; superseded by the merged-weight re-audit |
+| `Qwen3.5-9B--en--dpo--adapter--en_only_dpo_decision` | Qwen3.5-9B | en | dpo · adapter | 31,050 | 31,050 | adapter served through vLLM's LoRA path, which does not reproduce Qwen3.5 adapters; superseded by the merged-weight re-audit |
+| `Qwen3.5-9B--en--dpo--adapter--en_only_dpo_v2_ckpt50` | Qwen3.5-9B | en | dpo · adapter | 31,050 | 31,050 | adapter served through vLLM's LoRA path, which does not reproduce Qwen3.5 adapters; superseded by the merged-weight re-audit |
+| `Qwen3.5-9B--en--sft--adapter--en_only_v2_ckpt250` | Qwen3.5-9B | en | sft · adapter | 31,050 | 31,050 | adapter served through vLLM's LoRA path, which does not reproduce Qwen3.5 adapters; superseded by the merged-weight re-audit |
+| `Qwen3.5-9B--uk--sft--adapter--uk_only` | Qwen3.5-9B | uk | sft · adapter | 31,050 | 31,050 | adapter served through vLLM's LoRA path, which does not reproduce Qwen3.5 adapters; superseded by the merged-weight re-audit |
 
 ---
 

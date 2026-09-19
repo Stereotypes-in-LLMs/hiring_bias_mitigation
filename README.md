@@ -944,9 +944,10 @@ Carry these into the write-up.
    enables them for whoever has the hours.
 
 2. **SFT ran on every target; preference optimisation ran only as probes.** SFT covered all
-   four Qwen targets. DPO ran on Qwen3.5-9B English alone, as a probe answering one question —
-   can a contrastive objective move decisions where SFT could not — first on the generated
-   pairs, then on decision-only pairs. KTO is configured, preflighted and has its data built,
+   four Qwen targets. DPO ran on Qwen3.5-9B English alone, as a probe — first on the generated
+   pairs, then on decision-only pairs. It was motivated by SFT appearing not to move decisions,
+   which turned out to be an audit artefact (limitation 5), so the probes now answer a narrower
+   question: how a contrastive objective compares with SFT on the same model. KTO is configured, preflighted and has its data built,
    and was not run. Report the preference family as *probed on one model*, not as a sweep, and
    never as *no effect* where it was simply not run.
 
@@ -978,7 +979,16 @@ Carry these into the write-up.
    metrics would be tuning on the test set), and auditing the best-loss and final checkpoints
    side by side is future work — both are on disk, and it costs ~1.6 GPU-hours per model.
 
-5. **ORPO was replaced by KTO, for a dependency reason.** The study planned DPO and ORPO as
+5. **Trained adapters must be audited from merged weights.** The first audits of every SFT
+   and DPO adapter served them through vLLM's LoRA support, which does not reproduce Qwen3.5's
+   hybrid-architecture adapters: HF + PEFT and vLLM agree on 98.9% of the base model's
+   benchmark decisions but on 82.5% of the SFT adapter's, and the adapter's 17.5% decision
+   change appeared as 0.3% in the audit. Those runs are excluded from the report. Audits now
+   fold the adapter into the weights first (`mitigation/merge.py`); served that way, vLLM
+   agrees with HF + PEFT on 97.4% of the adapter's decisions. The check that caught it —
+   `scripts/diagnose_adapter.py --vllm-merged` — should be rerun for any new architecture.
+
+6. **ORPO was replaced by KTO, for a dependency reason.** The study planned DPO and ORPO as
    its two preference objectives. TRL 1.x removed `ORPOConfig`/`ORPOTrainer` outright, and
    pinning an older TRL would have meant downgrading transformers below what vLLM needs —
    breaking the evaluation pipeline that had already produced forty scored runs. KTO takes its
@@ -989,7 +999,7 @@ Carry these into the write-up.
    from the base model, so the pair separates "preference after SFT" from "preference instead
    of SFT".
 
-6. **Intersections are measured, never trained.** Every SFT and DPO row carries exactly one
+7. **Intersections are measured, never trained.** Every SFT and DPO row carries exactly one
    protected attribute; no training example presents a CV that is both a veteran and
    non-binary. The baseline confirms intersectional disparity in 16 cells, so the question is
    live — phase 2 evaluates whether single-attribute invariance training transfers to
@@ -998,28 +1008,28 @@ Carry these into the write-up.
    than a single attribute (intersections have no attribute file; `intersection_attributes`
    builds them as tuples), plus roughly one teacher-model day for both languages.
 
-7. **The Ukrainian gender condition is weaker than the audit's.** The gated Djinni mirrors
+8. **The Ukrainian gender condition is weaker than the audit's.** The gated Djinni mirrors
    carry `CV_male_marked` / `CV_female_marked` columns that propagate morphological gender
    agreement through the CV; the public mirrors do not. Ukrainian gender injection here is
    the labelled field and the first-person sentence only. Military status and religion are
    unaffected. See `data/PROVENANCE.md`.
-8. **Greedy decoding by default.** It removes sampling variance so a difference between two
+9. **Greedy decoding by default.** It removes sampling variance so a difference between two
    runs is attributable to the mitigation. It also means the inconsistency rate no longer
    contains a decoding-noise component the audit's numbers did — note this when comparing
    against the published baseline. Set `n_samples > 1` with a non-zero temperature to measure
    that variance instead.
-9. **Thinking mode is off.** Non-thinking keeps a baseline comparable to the audit study's
+10. **Thinking mode is off.** Non-thinking keeps a baseline comparable to the audit study's
    non-reasoning models. "Does an inference-time reasoning trace reduce hiring bias?" is a
    real question, but it belongs in its own arm, not as a silent property of the baseline.
-10. **Erasure is linear.** A concept encoded non-linearly survives LEACE and INLP. A null
+11. **Erasure is linear.** A concept encoded non-linearly survives LEACE and INLP. A null
    result from the embedding family is a result about linear representation.
-11. **The teacher is itself biased.** The training data's verdicts are one model's opinions on
+12. **The teacher is itself biased.** The training data's verdicts are one model's opinions on
    unlabelled data. The construction pins *consistency* across attribute variants; it does not
    make any individual verdict correct.
-12. **Attribute-mediated bias only.** Every condition here injects an attribute. Rao et al.
+13. **Attribute-mediated bias only.** Every condition here injects an attribute. Rao et al.
    (2025) find bias entering through writing style with no attribute present at all — which
    no scrubber removes and no condition here measures.
-13. **The rationale measure is unvalidated against human judgement.** Reporting requirement 7
+14. **The rationale measure is unvalidated against human judgement.** Reporting requirement 7
    remains open; §6 of the report routes it to manual review, but inter-annotator agreement
    on a sample is still owed.
 
@@ -1037,7 +1047,7 @@ start here, not with another hyperparameter sweep. Each item below is measured o
 | Problem | Measured | Consequence | What to do |
 | --- | --- | --- | --- |
 | **Negatives are overt, real bias is covert** | 91% of DPO rejected responses name the attribute ("We cannot hire candidates of the Sikh faith"); 78% share the chosen decision | Pairs separable by wording alone: DPO reached 100% preference accuracy and ~1e-5 eval loss in 50 steps, teaching the model to avoid language it never used (Qwen3.5-9B names the attribute in 2.3% of baseline rationales) | Generate negatives as the *opposite decision under an attribute-free, plausible rationale*; filter out any negative that names the attribute — the inverse of today's `filter_biased` |
-| **SFT targets mostly repeat what the model already decides** | ~80% agreement between the base model and the attribute-free reference | Little decision signal; SFT v1 changed text on 18% of rows and decisions on 0.3%, v2 (decision-weighted ×8) changed neither — it only raised confidence | Oversample the pairs where the model *disagrees* with the reference, or where its decision flips across attribute variants — the only rows carrying a signal SFT does not already satisfy |
+| **SFT targets mostly repeat what the model already decides** | ~80% agreement between the base model and the attribute-free reference | Little decision signal per row. (An earlier reading here — "SFT changed decisions on 0.3% of rows" — came from the vLLM LoRA audit artefact, limitation 5; under HF + PEFT the 9B English adapter changes 17.5% of benchmark decisions.) | Oversample the pairs where the model *disagrees* with the reference, or where its decision flips across attribute variants — the only rows carrying a signal SFT does not already satisfy |
 | **Few pairs, many variants** | 3,000 pairs per language from 1,500 candidates and 2,926 jobs; each pair expanded to 12 attribute variants | The dataset is narrow and deep: the model sees the same CV a dozen times and memorises it (see the next row) | Invert the ratio at the same teacher budget — e.g. ~10,000 pairs with 3–4 variants each. The Djinni pool holds far more candidates than the 1,500 used, so this is a config change (`n_pairs_per_language`, `attributes_per_pair`), not new data collection |
 | **The anchor verdict is one noisy sample** | The attribute-free `reference` pass — which every variant inherits its decision from — draws a single sample at `temperature: 0.7` | Obvious candidates are unaffected; borderline ones can land on either side by chance, and all 12 variants then inherit a coin flip. Bias acts mostly on exactly those borderline candidates — strong ones are hired regardless and weak ones rejected regardless — so the anchor is least reliable precisely where the mitigation needs it most | Decide the anchor first and robustly: greedy decoding, or a majority over k samples, and **drop pairs where the teacher disagrees with itself** before any attribute is added. Those pairs have no well-defined fair answer, and training invariance toward a random one is noise. Keeping the agreement rate as a column also gives a per-pair difficulty score the analysis can stratify by |
 | **Near-duplicate completions** | 57% of English SFT completions are unique; each (candidate, job) pair appears 3.6× with near-identical text | Memorisation: validation loss bottomed before the end of the first epoch on every run | Vary the invariant rationale across a pair's variants, or deduplicate and weight by pair rather than by row |
