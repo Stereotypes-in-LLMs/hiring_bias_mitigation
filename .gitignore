@@ -12,3 +12,6 @@ wandb/
 artifacts/**/*.parquet
 artifacts/**/*.jsonl
 data/benchmark/pairs_*.parquet
+
+# Personal notes (local only)
+note.md

@@ -16,6 +16,22 @@ The audit study is **unpublished**; cite its repositories, not a paper:
 
 ---
 
+## Released artifacts
+
+Everything is collected in the Hugging Face collection
+**[Hiring Bias Mitigation](https://huggingface.co/collections/Stereotypes-in-LLMs/hiring-bias-mitigation-6aae99f67667367c7149cedd)**.
+
+| Artifact | Where | What it holds |
+|---|---|---|
+| **Model responses** | [`Stereotypes-in-LLMs/hiring-bias-mitigation-responses`](https://huggingface.co/datasets/Stereotypes-in-LLMs/hiring-bias-mitigation-responses) | Every audited response, one subset per run: baselines of all five models, and the prompt, scrub and LEACE mitigations on Qwen3.5-4B/9B, English and Ukrainian — with each run's metadata, scored summary and the set-stability tables. Re-score any run without a GPU (`run_audit.py --score-only`). |
+| Fine-tuned adapters (SFT) and their responses | *to be added* | After the merged-weight re-audit (see [limitation 5](#known-limitations)). |
+| **Synthetic training data** | [`Stereotypes-in-LLMs/hiring-bias-mitigation-synthetic-data`](https://huggingface.co/datasets/Stereotypes-in-LLMs/hiring-bias-mitigation-synthetic-data) | The Step 7 data: SFT, DPO, decision-only DPO, consistency DPO and KTO subsets, plus the raw teacher passes (anchor, invariant, biased). Checked against the benchmark hold-out before upload. Contains deliberately biased negatives. |
+| Results and findings | this repository | [`reports/RESULTS.md`](reports/RESULTS.md), [`reports/MITIGATION_FINDINGS.md`](reports/MITIGATION_FINDINGS.md), [`reports/EXPERIMENT_PLAN.md`](reports/EXPERIMENT_PLAN.md), [`reports/FINDINGS.md`](reports/FINDINGS.md), [`docs/METRICS.md`](docs/METRICS.md) |
+| The audit study's responses | [Hiring Analyses Artifacts](https://huggingface.co/collections/Stereotypes-in-LLMs/hiring-analyses-artifacts-662d4b16d1055e6b3b6d0b9e) | The unmitigated study this work extends. |
+| Source CVs and job descriptions | [Djinni Recruitment Dataset](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-english) | Candidate profiles and job descriptions, English and Ukrainian. |
+
+---
+
 ## Table of contents
 
 **Setup** — [Scope](#scope) · [Prerequisites](#prerequisites) · [Step 1: install](#step-1-install)
@@ -28,7 +44,7 @@ The audit study is **unpublished**; cite its repositories, not a paper:
 (→ [unattended queue](#9-0-the-whole-queue-unattended))
 · [Step 10: final tables](#step-10-final-report-and-paper-tables)
 
-**Reference** — [**Metrics reference →**](docs/METRICS.md) · [Analysis](#step-6-read-the-report-and-decide) · [Selecting experiments](#selecting-experiments) · [Configs](#config-reference)
+**Reference** — [**Released artifacts**](#released-artifacts) · [**Metrics reference →**](docs/METRICS.md) · [Analysis](#step-6-read-the-report-and-decide) · [Selecting experiments](#selecting-experiments) · [Configs](#config-reference)
 · [Mitigation families](#the-five-mitigation-families) · [Evaluation framework](#evaluation-framework)
 · [Repo layout](#repo-layout) · [Hardware](#hardware-notes) · [Troubleshooting](#troubleshooting)
 · [**Paper figures**](#paper-figures-english-and-ukrainian) · [Limitations](#known-limitations)
@@ -430,14 +446,28 @@ memorisation score.
 ## Step 8: publish the dataset (optional)
 
 ```bash
-PUSH_TO_HUB=true uv run python scripts/push_dataset_to_hub.py \
-    --artifacts-dir artifacts/semisynthetic-v1 \
-    --repo-id <org>/hiring-bias-mitigation-semisynthetic
+PUSH_TO_HUB=true uv run python scripts/publish_training_data.py --dry-run   # checks + card
+PUSH_TO_HUB=true uv run python scripts/publish_training_data.py             # -> hiring-bias-mitigation-synthetic-data
 ```
 
-Gated on `PUSH_TO_HUB=true`, prints what it is about to publish, re-checks contamination, and
-requires you to type `publish`. The unfiltered `raw/` dumps stay local. Nothing is ever
-published automatically.
+`scripts/push_dataset_to_hub.py` is the older, generic uploader; the script above publishes
+every subset with its own card and re-runs the hold-out check on each file.
+
+Both publish scripts refuse to run without `PUSH_TO_HUB=true`, and `--dry-run` writes the
+card to `reports/` for review before anything is uploaded. The raw teacher passes are
+published as their own subsets (`teacher_*`), since reproducing them needs the 122B teacher.
+Nothing is ever published automatically.
+
+The audited model responses are published separately, one subset per run, with a card
+generated from the runs themselves:
+
+```bash
+PUSH_TO_HUB=true uv run python scripts/publish_responses.py --dry-run   # list + write card
+PUSH_TO_HUB=true uv run python scripts/publish_responses.py             # baseline, prompt, scrub, embedding
+PUSH_TO_HUB=true uv run python scripts/publish_responses.py --add-families sft dpo
+```
+
+Adapter runs audited through vLLM's LoRA path are refused (limitation 5).
 
 ---
 
@@ -1065,15 +1095,11 @@ outputs before any training is launched.
 
 ## Citation
 
+> **TBD.** The citation for the mitigation paper, and further references, will be added here once the paper is published.
+
 The audit study is unpublished. Cite the repositories:
 [AIHiringBiasAnalysis-LLMs](https://github.com/Stereotypes-in-LLMs/AIHiringBiasAnalysis-LLMs),
 [Fairness-in-AI-Recruitment](https://github.com/TianaLina/Fairness-in-AI-Recruitment).
 
 Underlying corpus: Drushchak, N. & Romanyshyn, M. (2024). *Introducing the Djinni Recruitment
 Dataset: A Corpus of Anonymized CVs and Job Postings.* UNLP @ LREC-COLING 2024.
-
-
-
-
-
-claude --resume 4d1d17c5-0163-42aa-9585-99f896d30cbc
