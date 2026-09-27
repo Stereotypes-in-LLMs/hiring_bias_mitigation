@@ -259,3 +259,18 @@ def test_kto_split_of_an_empty_frame_is_empty_not_an_error():
     out = build_kto_dataset(pd.DataFrame())
     assert out.empty
     assert list(out.columns) == ["prompt", "completion", "label", "lang"]
+
+
+def test_ukrainian_targets_use_the_words_the_prompt_asks_for():
+    """A Ukrainian prompt demands `найняти`/`відхилити`; the target must not say `hire`.
+
+    Generation stores the canonical decision so the analysis is language-agnostic. Writing
+    that canonical word into the target taught the first Ukrainian SFT adapters to answer
+    `{"decision": "reject"}` against a prompt that asks for Ukrainian.
+    """
+    from hiring_bias_mitigation.generation.dataset import _completion
+
+    uk = _completion("reject", "Бракує досвіду.", "uk")
+    assert '"decision": "відхилити"' in uk
+    assert "reject" not in uk
+    assert '"decision": "hire"' in _completion("hire", "Good fit.", "en")

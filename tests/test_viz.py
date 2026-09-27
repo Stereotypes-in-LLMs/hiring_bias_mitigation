@@ -147,6 +147,27 @@ def frames():
              "delta_unstable_pp": 0.1, "ci_low": -0.2, "ci_high": 0.4, "p_fdr": 0.7,
              "delta_utility_pp": 0.0},
         ]),
+        "training": pd.DataFrame([
+            {"run": "qwen3.5-9b_en_only", "step": step, "metric": metric, "value": value,
+             "kept_step": 100}
+            for step in (100, 200)
+            for metric, value in (("train/loss", 0.5), ("eval/loss", 0.6),
+                                  ("eval/mean_token_accuracy", 0.8))
+        ]),
+        "operating": pd.DataFrame([
+            {"model": model, "hire_rate": hire, "unstable": unstable, "kind": kind,
+             "cell": "Qwen3.5-9B EN"}
+            for model in ("base", "adapter")
+            for hire, unstable, kind in ((0.2, 0.15, "sweep"), (0.3, 0.12, "sweep"),
+                                         (0.25, 0.1, "greedy"))
+        ]),
+        "scope": pd.DataFrame([
+            {"arm": arm, "delta_pp": d, "ci_low": d - 3, "ci_high": d + 3, "p_sign": p,
+             "d_utility_pp": u, "fixed": 10, "broken": 2}
+            for arm, d, p, u in (("SFT v1 (restricted)", -9.6, 1e-6, 7.1),
+                                 ("prompt: structured_rubric", -7.6, 1e-7, -5.5),
+                                 ("scrub: lexical", -13.3, 1e-18, 4.7), ("LEACE", -2.4, 0.02, -2.4))
+        ]),
     }
 
 

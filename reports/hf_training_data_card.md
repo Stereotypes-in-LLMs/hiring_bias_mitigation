@@ -124,7 +124,7 @@ Per-reason counts are in `generation_report.json`.
 | `dpo` | train 31,476, validation 1,647 | Preference pairs: `chosen` = invariant response, `rejected` = the teacher's response when told to let the attribute drive the decision. | DPO probe (Qwen3.5-9B EN). |
 | `dpo_decision` | train 31,476, validation 1,647 | The `dpo` pairs reduced to the decision alone (`{"decision": "hire"}` vs `reject`), no rationale, so the pair cannot be told apart by wording. | Decision-only DPO probe (Qwen3.5-9B EN). |
 | `dpo_consistency` | train 6,879, validation 345 | Decision-only pairs from the student model's (Qwen3.5-9B) own counterfactually unstable sets: chosen = the set's majority decision, rejected = the opposite. Report: `dpo_consistency_report.json`. | Built, not trained (future work). |
-| `kto` | train 62,952, validation 3,294 | The `dpo` pairs unpaired into desirable / undesirable completions (`label`). | Built, not trained (future work). |
+| `kto` | train 62,882, validation 3,364 | The `dpo` pairs unpaired into desirable / undesirable completions (`label`). | Built, not trained (future work). |
 | `teacher_reference` | en 3,000, uk 3,000 | Unfiltered teacher pass 1: the decision on the bare job–CV pair, no attribute. The anchor verdict. | Input to every subset above. |
 | `teacher_invariant` | en 36,000, uk 35,988 | Unfiltered teacher pass 2: per attribute variant, the response a fair screener would give. | Filtered into the SFT `completion` / DPO `chosen` side. |
 | `teacher_biased` | en 36,000, uk 35,988 | Unfiltered teacher pass 3: the same variant with the attribute allowed to drive the outcome. Includes refusals and non-biased outputs that the filters dropped. | Filtered into the DPO `rejected` side. |
@@ -141,6 +141,17 @@ The evaluation benchmark's 300 candidates and 301 jobs are excluded from the sou
 before matching. Every file here was checked again against that hold-out before upload.
 Candidates whose own CV already mentions a protected characteristic are also removed, so an
 injected attribute never contradicts its profile.
+
+## Revisions
+
+**2026-09-22 — Ukrainian targets corrected.** The first release carried the *canonical* decision
+word in every target: Ukrainian rows said `{"decision": "reject"}` where the prompt asks for
+`найняти або відхилити`. Decisions are normalised to `hire`/`reject` so the analysis is
+language-agnostic, and that normalised value had been written into the target text. Both
+Ukrainian adapters trained on it learned to answer in English — a changed output contract that
+no metric flagged, because the parser accepts either language. Ukrainian targets now carry
+`найняти` / `відхилити`; English rows and every row count are unchanged. If you downloaded this
+dataset before that date, re-download it. Fixed in `generation/dataset.py`, pinned by a test.
 
 ## Known issues
 

@@ -80,11 +80,14 @@ def pool_sets(lang: str, trained_pairs: set[str], n_sets: int, seed: int) -> pd.
                        prompt=[D._audit_prompt(r) for r in rows.to_dict("records")])
 
 
-def decision_token_ids(tokenizer) -> tuple[int, int]:
+WORDS = {"en": ("hire", "reject"), "uk": ("найняти", "відхилити")}
+
+
+def decision_token_ids(tokenizer, lang: str = "en") -> tuple[int, int]:
     """The first token of each decision word, as it follows the forced prefix."""
     base = tokenizer(PREFIX, add_special_tokens=False)["input_ids"]
     ids = []
-    for word in ("hire", "reject"):
+    for word in WORDS[lang]:
         full = tokenizer(PREFIX + word, add_special_tokens=False)["input_ids"]
         assert full[: len(base)] == base, "prefix tokenises differently before the decision"
         ids.append(full[len(base)])
@@ -158,7 +161,7 @@ def main() -> None:
     tokenizer.padding_side = "left"
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-    hire_id, reject_id = decision_token_ids(tokenizer)
+    hire_id, reject_id = decision_token_ids(tokenizer, args.lang)
 
     model = AutoModelForCausalLM.from_pretrained(args.base_model, dtype=torch.bfloat16,
                                                  device_map="cuda", trust_remote_code=True)

@@ -43,6 +43,8 @@ Thresholds are judgement calls, stated in `ANALYSIS.md` and overridable on the c
 
 ## Finding 1 — Military status dominates, replicating the audit study
 
+![Baseline disparity by model, language and protected group](../figures/en/baseline_disparity.png)
+
 23 of 29 confirmed cells involve military status, alone or in an intersection. Gender and
 religion contribute three each.
 
@@ -115,6 +117,8 @@ This closes a gap the prior work left open: the language effect is not an artefa
 generation quality.
 
 ## Finding 4 — Implicit injection is where English bias lives; Ukrainian shows it under both
+
+![Labelled field against first-person biography](../figures/en/condition_contrast.png)
 
 **Cell level: strong.** Where the raw generations license a McNemar test on the decisions that
 actually changed between framings, several models are clean under a labelled attribute field
@@ -218,9 +222,48 @@ Ukrainian-native model could not be tuned to threshold this task, while general-
 handle it out of the box" is a publishable negative result about Ukrainian-language model
 development.
 
+### Outcome: the rescue worked, and the pre-registered gate was cleared
+
+SFT on the counterfactually invariant targets was run on LAPA in both languages and audited
+from merged weights. **The 60% utility gate written above was cleared with room to spare**, so
+LAPA's fairness numbers are interpretable and enter the study as its Ukrainian-native data
+point.
+
+| LAPA-12B | Utility | Hire rate (reference) | Unstable sets |
+|---|---:|---:|---:|
+| en, base | 51.0% | 80.1% (33.3%) | 37.8% |
+| **en, after SFT** | **80.6%** | 17.8% | **4.6%** |
+| uk, base | 54.9% | 75.2% (35.1%) | 37.7% |
+| **uk, after SFT** | **77.2%** | 16.4% | **4.2%** |
+
+The diagnosis in the section above — *ranks candidates, thresholds them badly* — is what the
+tuning fixed. On the attribute-free control, discrimination between candidates the reference
+would hire and those it would reject **widened** while the threshold moved:
+
+| LAPA-12B (attribute-free) | AR \| ref=hire | AR \| ref=reject | Discrimination | Overall AR |
+|---|---:|---:|---:|---:|
+| en, base | 95.3% | 67.7% | 27.7 pp | 76.9% |
+| **en, after SFT** | 47.3% | **3.0%** | **44.3 pp** | 17.8% |
+| uk, base | 93.0% | 64.0% | 29.0 pp | 74.2% |
+| **uk, after SFT** | 39.9% | **3.4%** | **36.4 pp** | 16.2% |
+
+It stopped hiring 2 of every 3 candidates the reference rejects, and now hires 3%. Fairness
+followed: instability fell by a third of all sets (−33.3 pp en, −33.6 pp uk), significant in
+every protected group. Full numbers and the operating-point control are in
+[`MITIGATION_FINDINGS.md`](MITIGATION_FINDINGS.md).
+
 ---
 
 ## What to mitigate
+
+> **Executed.** Everything below was run; the results are in
+> [`MITIGATION_FINDINGS.md`](MITIGATION_FINDINGS.md), with one change of scope: preference
+> optimisation (DPO, KTO) ran only as internal probes on one model and is reported as future
+> work rather than as a result. Track A covered 8 prompt strategies, 2 scrubbers, LEACE and
+> SFT across Qwen3.5-4B/9B in both languages; Track B covered LAPA-12B in both languages.
+> Headline: SFT reduced unstable counterfactual sets in **every** cell and **every** protected
+> group (−10 to −38 pp), raising utility in five of six cells, and the gain survives an
+> operating-point control.
 
 29 target cells, which collapse into a small set of runs because one audit run covers every
 group at once. Ordered by disparity, with the controls that make the results interpretable.
@@ -284,6 +327,11 @@ Three consequences for the experiment design:
    demonstrate that a mitigation does not damage a model that needed nothing.
 
 ## Two tracks, run in parallel
+
+> **Both tracks completed.** Track A: the fairness arms, on the cells below. Track B: the LAPA
+> rescue, whose outcome is in [Finding 6](#outcome-the-rescue-worked-and-the-pre-registered-gate-was-cleared)
+> — the utility gate was cleared, so LAPA's fairness numbers count. The table below is the
+> design as pre-registered; `DPO / ORPO` became internal probes only.
 
 The plan splits into two experiments that answer different questions and must not be pooled
 in the write-up.
@@ -401,9 +449,28 @@ costs the same two training runs to find out.
 5. **Attribute-mediated bias only.** Every condition injects an attribute. Rao et al. (2025)
    find bias entering through writing style with no attribute present, which nothing here
    measures.
-6. **The manual-review queue has not been worked.** Language drift, fuzzy decision mapping and
-   canned rationales invalidate the numbers computed on top of them. The Ukrainian LAPA run
-   raised 18 language-drift rows; the interpretable runs raised none, but the leakage and
-   degenerate-feedback queues remain unread.
+6. **Two bugs found after the fact, both in the pipeline rather than the models.** An adapter
+   served through vLLM's LoRA path is not the trained model (agreement 38–83% against
+   HuggingFace, depending on architecture), and the Ukrainian training targets carried the
+   canonical English decision word. Both are fixed, pinned by tests, and written up as
+   methodological lessons 4 and 5 in [`MITIGATION_FINDINGS.md`](MITIGATION_FINDINGS.md). They
+   are listed here because they say something general: **a clean metric does not mean the
+   intended model, or the intended data, was used.**
 7. **Attribute leakage is detected by prefix matching.** Rates are reported; individual hits
    need reading before quoting.
+
+---
+
+## Figures
+
+Built by `scripts/make_figures.py`; Ukrainian twins in [`../figures/uk/`](../figures/uk),
+each beside the CSV it was drawn from.
+
+| Figure | What it shows |
+|---|---|
+| [`baseline_disparity`](../figures/en/baseline_disparity.svg) | disparity by model, language and group — Findings 1, 3, 5 |
+| [`attribute_gaps`](../figures/en/attribute_gaps.svg) | acceptance rate per attribute with bootstrap intervals — Findings 1, 2 |
+| [`condition_contrast`](../figures/en/condition_contrast.svg) | labelled field against first-person biography — Finding 4 |
+| [`leak_versus_disparity`](../figures/en/leak_versus_disparity.svg) | attribute mentions against residual disparity |
+| [`fairness_utility_tradeoff`](../figures/en/fairness_utility_tradeoff.svg) | disparity against utility, every run — where LAPA sits apart |
+| Mitigation figures | in [`MITIGATION_FINDINGS.md`](MITIGATION_FINDINGS.md) |

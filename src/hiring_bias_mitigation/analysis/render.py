@@ -436,17 +436,14 @@ def _footer() -> str:
     return (
         "---\n\n"
         "### Before this becomes a paper claim\n\n"
-        "1. **Work the manual-review queue** (`reports/manual_review/review_queue.csv`). "
-        "Language drift, fuzzy decision mapping and canned rationales all invalidate the "
-        "numbers computed on top of them, and none of this analysis re-checks them.\n"
-        "2. **Read the raw generations for every headline attribute.** The parquet under "
+        "1. **Read the raw generations for every headline attribute.** The parquet under "
         "`outputs/raw/` carries `raw_output` unmodified; a gap that survives reading fifty "
         "actual responses is a different thing from one that only survives a test.\n"
-        "3. **State the thresholds in the write-up**, not just the verdicts. A reader who "
+        "2. **State the thresholds in the write-up**, not just the verdicts. A reader who "
         "disagrees with `material_gap = 5pp` should be able to see what changes at 3.\n"
-        "4. **Report the excluded cells as a result.** A model that could not be measured is "
+        "3. **Report the excluded cells as a result.** A model that could not be measured is "
         "a finding about the model.\n"
-        "5. **The rationale measure is still unvalidated** against human judgement — the "
+        "4. **The rationale measure is still unvalidated** against human judgement — the "
         "audit's reporting requirement 7, still open.\n"
     )
 

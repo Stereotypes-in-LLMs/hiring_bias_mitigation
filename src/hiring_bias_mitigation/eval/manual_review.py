@@ -6,9 +6,11 @@ similarity is a weak instrument by the audit paper's own account, and an uncorre
 a small effect is exactly what multiple comparisons produce from a fair model. None of these
 should be reported as established without someone reading the underlying rows.
 
-This module builds that queue. Every item names the check, the reason it was raised, and a
-sample of the rows to read, so the reviewer can work from `reports/MANUAL_REVIEW.md` and the
-CSVs beside it rather than re-deriving anything.
+This module raises those flags. Every item names the check, the reason it was raised, and a
+sample of the rows behind it, stored in each run's JSON under `manual_review`. They are an
+internal quality signal, not a reported result: `run_audit.py` prints them per run, and the
+usability gate in `analysis/evidence.py` reads the language-drift flag from them. The
+generated reports no longer carry a queue section.
 
 Checks, and what a real problem looks like in each:
 

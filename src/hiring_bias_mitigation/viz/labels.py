@@ -99,6 +99,56 @@ STRINGS: dict[str, dict[str, str]] = {
         "uk": "Кожна точка — один ран. Базові моделі праворуч, очищені — ліворуч.",
     },
 
+    # --- training and robustness figures ---
+    "fig_training_title": {
+        "en": "SFT training curves (Weights & Biases)",
+        "uk": "Криві навчання SFT (Weights & Biases)",
+    },
+    "training_hint": {
+        "en": "Dashed line: the checkpoint kept by early stopping, which is the one audited.",
+        "uk": "Пунктир: чекпойнт, збережений ранньою зупинкою, — саме його аудитовано.",
+    },
+    "step": {"en": "Training step", "uk": "Крок навчання"},
+    "value": {"en": "Value", "uk": "Значення"},
+    "train/loss": {"en": "Training loss", "uk": "Втрата на навчанні"},
+    "eval/loss": {"en": "Validation loss", "uk": "Втрата на валідації"},
+    "eval/mean_token_accuracy": {"en": "Validation token accuracy",
+                                 "uk": "Точність токенів на валідації"},
+    "eval/entropy": {"en": "Validation entropy", "uk": "Ентропія на валідації"},
+    "fig_operating_title": {
+        "en": "Consistency at equal hire rate: base model vs SFT",
+        "uk": "Узгодженість за однакової частки найму: базова модель і SFT",
+    },
+    "operating_hint": {
+        "en": "Each curve sweeps the decision threshold on the model's own hire–reject margin. "
+              "Dots: the models as audited (greedy).",
+        "uk": "Кожна крива — зсув порогу рішення за різницею логітів «найняти–відхилити». "
+              "Точки: моделі в аудиті (жадібне декодування).",
+    },
+    "hire_rate": {"en": "Hire rate (%)", "uk": "Частка найму (%)"},
+    "unstable_sets": {"en": "Unstable counterfactual sets (%)",
+                      "uk": "Нестабільні контрфактичні набори (%)"},
+    "base_model": {"en": "Base model", "uk": "Базова модель"},
+    "sft_model": {"en": "SFT (LoRA, merged)", "uk": "SFT (LoRA, злиті ваги)"},
+    "fig_scope_title": {
+        "en": "Qwen3.5-9B English: every mitigation on the same 450 sets",
+        "uk": "Qwen3.5-9B, англійська: усі мітигації на тих самих 450 наборах",
+    },
+    "scope_hint": {
+        "en": "Military status, implicit condition, 5 variants per set. Bars: 95% "
+              "candidate-clustered bootstrap CI. Lexical scrubbing is an upper bound, "
+              "not a deployable method.",
+        "uk": "Військовий статус, неявна умова, 5 варіантів на набір. Відрізки: 95% бутстреп-ДІ "
+              "з кластеризацією за кандидатом. Лексичне очищення — верхня межа, а не метод для "
+              "впровадження.",
+    },
+    "family_sft": {"en": "fine-tuning (SFT)", "uk": "донавчання (SFT)"},
+    "family_dpo": {"en": "preference (DPO/KTO)", "uk": "преференційне (DPO/KTO)"},
+    "family_none": {"en": "baseline", "uk": "базова модель"},
+    "family_prompt": {"en": "prompt", "uk": "промпт"},
+    "family_scrub": {"en": "input scrubbing", "uk": "очищення входу"},
+    "family_embedding": {"en": "concept erasure (LEACE)", "uk": "стирання концепту (LEACE)"},
+
     # --- protected groups ---
     "military_status": {"en": "Military status", "uk": "Військовий статус"},
     "gender": {"en": "Gender", "uk": "Стать"},
@@ -165,6 +215,18 @@ def t(key: str, lang: str, **fmt) -> str:
     if lang not in table:
         raise KeyError(f"{key!r} has no {lang!r} translation")
     return table[lang].format(**fmt) if fmt else table[lang]
+
+
+def family(name: str, lang: str) -> str:
+    """A mitigation family's display name, falling back to the identifier.
+
+    The families are config words (`prompt`, `scrub`, `embedding`, `sft`, `dpo`). A legend that
+    shows them untranslated is the one way an otherwise Ukrainian figure ends up half-English,
+    which is what this table exists to prevent -- but a family added later should still plot
+    under its own name rather than crash the figure run.
+    """
+    table = STRINGS.get(f"family_{name}")
+    return table[lang] if table and lang in table else name
 
 
 def strategy(name: str, lang: str) -> str:

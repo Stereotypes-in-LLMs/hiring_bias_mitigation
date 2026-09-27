@@ -49,8 +49,8 @@ Attribute mention rate (leakage) -- new here
     Share of rationales that name the injected protected attribute. Directly interpretable
     where FS is not: if the feedback for a war veteran says "as a veteran, you may find...",
     the attribute has entered the channel the EU AI Act's human-oversight requirement exposes
-    to a reviewer. Detection is a lexical heuristic, so flagged cases are routed to manual
-    review rather than reported as established (see eval/manual_review.py).
+    to a reviewer. Detection is a lexical heuristic, so rates are reported as rates: a single
+    flagged rationale is a candidate, not an established mention.
 """
 
 from __future__ import annotations
@@ -175,8 +175,8 @@ def _attribute_stems(attr: str) -> tuple[str, ...]:
 
     Ukrainian inflects heavily ("ветеран" / "ветерана" / "ветераном"), so exact matching
     misses most real mentions. Truncating to a 5-character prefix catches the paradigm at the
-    cost of occasional over-matching -- which is why every hit is a manual-review candidate,
-    not a finding.
+    cost of occasional over-matching -- which is why an individual hit is a candidate, not a
+    finding; only the rate is reported.
     """
     text = unicodedata.normalize("NFKC", attr).lower()
     words = [w for w in re.findall(r"[^\W\d_]+", text, flags=re.UNICODE) if w not in _STOPWORDS]

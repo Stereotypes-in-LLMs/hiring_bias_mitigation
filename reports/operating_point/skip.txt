@@ -1,0 +1,3 @@
+# hire rate moved < 5 pp under SFT (4B EN 28.0->23.2, 4B UK 19.4->21.7); the control is run for the 9B cells (+12.3, -19.4 pp)
+qwen3.5-4b_en_sft_en_only
+qwen3.5-4b_uk_sft_uk_only

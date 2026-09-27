@@ -1,0 +1,12 @@
+{
+  "run": "lapa-v0.1.2-instruct--en--sft--adapter--en_only",
+  "prompts": 31050,
+  "hire_rate_base": 0.7967793880837359,
+  "hire_rate_adapter": 0.17665056360708534,
+  "unstable_base_at_own_threshold": 0.21962962962962962,
+  "unstable_adapter_at_own_threshold": 0.017777777777777778,
+  "base_threshold_matched_to_adapter_hire_rate": 36.5,
+  "hire_rate_base_matched": 0.16801932367149758,
+  "unstable_base_at_matched_hire_rate": 0.20222222222222222,
+  "gain_explained_by_shift_pct": 8.623853211009171
+}

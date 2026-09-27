@@ -1,0 +1,31 @@
+# Hand-written: the scoped 9B-English prompt runs cover military status under the
+# implicit condition only (that is the one cell its baseline confirmed), which makes the
+# prompt-versus-SFT comparison there narrower than in every other cell. This repeats the
+# three prompts the paper leans on over the full grid, so the comparison is like for like.
+backend: vllm
+max_model_len: 8192
+gpu_memory_utilization: 0.8
+seed: 42
+raw_dir: outputs/raw
+conditions:
+- explicit
+- implicit
+- attr_free
+chat_template_kwargs:
+  enable_thinking: false
+max_intersection_cells: null
+generation:
+  max_new_tokens: 512
+  temperature: 0.0
+  top_p: 1.0
+  seed: 42
+model: Qwen/Qwen3.5-9B
+lang: en
+protected_groups:
+- military_status
+- gender
+- religion
+mitigation:
+  family: prompt
+  strategy: second_pass_verification
+run_suffix: fullscope

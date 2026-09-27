@@ -1,0 +1,30 @@
+{
+  "adapter": "outputs/sft/lapa-12b_en_only",
+  "prompts": 1380,
+  "benchmark_mean_abs_margin_shift": 34.22549019607843,
+  "benchmark_argmax_flips_pct": 61.568627450980394,
+  "train_pool_mean_abs_margin_shift": 30.503125,
+  "train_pool_argmax_flips_pct": 50.27777777777778,
+  "benchmark": {
+    "sets": 30,
+    "margin_spread_base": 6.332673819675572,
+    "margin_spread_adapter": 0.2502224510010944,
+    "spread_change_pct": -96.04870773189589,
+    "spread_wilcoxon_p": 1.862645149230957e-09,
+    "unstable_base_pct": 30.0,
+    "unstable_adapter_pct": 0.0
+  },
+  "train_pool": {
+    "sets": 60,
+    "margin_spread_base": 6.2311074129174635,
+    "margin_spread_adapter": 0.22139159804738412,
+    "spread_change_pct": -96.44699435627724,
+    "spread_wilcoxon_p": 1.629555794311934e-11,
+    "unstable_base_pct": 15.0,
+    "unstable_adapter_pct": 0.0
+  },
+  "hf_vs_vllm_agreement_base_pct": 98.62745098039215,
+  "hf_vs_vllm_agreement_adapter_pct": 38.03921568627451,
+  "hf_adapter_vs_vllm_merged_agreement_pct": 98.72549019607844,
+  "hf_base_vs_vllm_merged_agreement_pct": 37.15686274509804
+}

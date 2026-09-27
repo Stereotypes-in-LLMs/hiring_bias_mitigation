@@ -157,7 +157,12 @@ baseline and under each mitigation family ({', '.join(families)}). Each run is o
   ([candidate profiles](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-english),
   [job descriptions](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-job-descriptions-english)).
 
-Fine-tuned (SFT / DPO) runs will be added once their audits are final.
+**Fine-tuned runs are included.** The six SFT cells (Qwen3.5-4B/9B and LAPA-12B, English and
+Ukrainian) plus one decision-weighted probe, all audited from **merged weights**: vLLM's LoRA
+path does not reproduce these adapters (agreement with HuggingFace + PEFT is 38–83% depending
+on the architecture, against 95–99% for the base model), so every adapter is folded into the
+weights before serving. Preference-optimisation (DPO) runs are internal probes and are not
+published.
 
 ## Design
 

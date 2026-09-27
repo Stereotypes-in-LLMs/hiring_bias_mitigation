@@ -116,6 +116,15 @@
     "reference_agreement": 0.8147892720306513,
     "n_tests": 84
   },
+  "Qwen3.5-4B--en--sft--adapter--en_only": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.23156199677938807,
+    "reference_agreement": 0.8195169082125604,
+    "n_tests": 204
+  },
   "Qwen3.5-4B--uk--baseline": {
     "model": "Qwen/Qwen3.5-4B",
     "lang": "uk",
@@ -215,6 +224,15 @@
     "reference_agreement": 0.7451207729468599,
     "n_tests": 204
   },
+  "Qwen3.5-4B--uk--sft--adapter--uk_only": {
+    "model": "Qwen/Qwen3.5-4B",
+    "lang": "uk",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.2056038647342995,
+    "reference_agreement": 0.7777777777777778,
+    "n_tests": 204
+  },
   "Qwen3.5-9B--en--baseline": {
     "model": "Qwen/Qwen3.5-9B",
     "lang": "en",
@@ -223,6 +241,24 @@
     "population_acceptance_rate": 0.1409718353450944,
     "reference_agreement": 0.7802042711234912,
     "n_tests": 1074
+  },
+  "Qwen3.5-9B--en--dpo--adapter--en_only_dpo_decision": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "dpo",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.11665056360708535,
+    "reference_agreement": 0.7598067632850242,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--en--dpo--adapter--en_only_dpo_v2_ckpt50": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "dpo",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.28119162640901774,
+    "reference_agreement": 0.8236714975845411,
+    "n_tests": 204
   },
   "Qwen3.5-9B--en--embedding--leace": {
     "model": "Qwen/Qwen3.5-9B",
@@ -251,6 +287,15 @@
     "reference_agreement": 0.8392592592592593,
     "n_tests": 15
   },
+  "Qwen3.5-9B--en--prompt--ignore_personal_info--fullscope": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.17185185185185184,
+    "reference_agreement": 0.8000644122383253,
+    "n_tests": 204
+  },
   "Qwen3.5-9B--en--prompt--ignore_personal_info": {
     "model": "Qwen/Qwen3.5-9B",
     "lang": "en",
@@ -278,6 +323,15 @@
     "reference_agreement": 0.7451851851851852,
     "n_tests": 15
   },
+  "Qwen3.5-9B--en--prompt--second_pass_verification--fullscope": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.1777133655394525,
+    "reference_agreement": 0.7981964573268922,
+    "n_tests": 204
+  },
   "Qwen3.5-9B--en--prompt--second_pass_verification": {
     "model": "Qwen/Qwen3.5-9B",
     "lang": "en",
@@ -286,6 +340,15 @@
     "population_acceptance_rate": 0.13444444444444445,
     "reference_agreement": 0.7751851851851852,
     "n_tests": 15
+  },
+  "Qwen3.5-9B--en--prompt--structured_rubric--fullscope": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "prompt",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.06425327707816676,
+    "reference_agreement": 0.7261425488743599,
+    "n_tests": 204
   },
   "Qwen3.5-9B--en--prompt--structured_rubric": {
     "model": "Qwen/Qwen3.5-9B",
@@ -322,6 +385,24 @@
     "population_acceptance_rate": 0.18037037037037038,
     "reference_agreement": 0.8077777777777778,
     "n_tests": 15
+  },
+  "Qwen3.5-9B--en--sft--adapter--en_only": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.28048309178743963,
+    "reference_agreement": 0.8252173913043478,
+    "n_tests": 204
+  },
+  "Qwen3.5-9B--en--sft--adapter--en_only_v2_ckpt250": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.18309178743961352,
+    "reference_agreement": 0.8136876006441224,
+    "n_tests": 204
   },
   "Qwen3.5-9B--uk--baseline": {
     "model": "Qwen/Qwen3.5-9B",
@@ -431,6 +512,15 @@
     "reference_agreement": 0.8064027826983156,
     "n_tests": 204
   },
+  "Qwen3.5-9B--uk--sft--adapter--uk_only": {
+    "model": "Qwen/Qwen3.5-9B",
+    "lang": "uk",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.11607085346215781,
+    "reference_agreement": 0.7522705314009662,
+    "n_tests": 204
+  },
   "gemma-4-12B-it--en--baseline": {
     "model": "google/gemma-4-12B-it",
     "lang": "en",
@@ -476,6 +566,15 @@
     "reference_agreement": 0.4945310710682208,
     "n_tests": 1074
   },
+  "lapa-v0.1.2-instruct--en--sft--adapter--en_only": {
+    "model": "lapa-llm/lapa-v0.1.2-instruct",
+    "lang": "en",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.17829307568438002,
+    "reference_agreement": 0.8061191626409018,
+    "n_tests": 204
+  },
   "lapa-v0.1.2-instruct--uk--baseline": {
     "model": "lapa-llm/lapa-v0.1.2-instruct",
     "lang": "uk",
@@ -484,5 +583,14 @@
     "population_acceptance_rate": 0.7858679679313488,
     "reference_agreement": 0.526943991468201,
     "n_tests": 1074
+  },
+  "lapa-v0.1.2-instruct--uk--sft--adapter--uk_only": {
+    "model": "lapa-llm/lapa-v0.1.2-instruct",
+    "lang": "uk",
+    "mitigation": "sft",
+    "n_prompts": 31050,
+    "population_acceptance_rate": 0.16373590982286634,
+    "reference_agreement": 0.7724315619967794,
+    "n_tests": 204
   }
 }

@@ -1,6 +1,6 @@
 # Where is there actually bias?
 
-*Generated 2026-09-17 20:24 by `scripts/analyze_results.py` from `eval/results/`. Derived — do not edit by hand.*
+*Generated 2026-09-27 10:51 by `scripts/analyze_results.py` from `eval/results/`. Derived — do not edit by hand.*
 
 This is the argument. The measurements it argues from are in [`RESULTS.md`](RESULTS.md), and every metric is defined in [`docs/METRICS.md`](../docs/METRICS.md).
 
@@ -431,8 +431,7 @@ Written to `reports/mitigation_plan.yaml`, with a ready-made selection script at
 
 ### Before this becomes a paper claim
 
-1. **Work the manual-review queue** (`reports/manual_review/review_queue.csv`). Language drift, fuzzy decision mapping and canned rationales all invalidate the numbers computed on top of them, and none of this analysis re-checks them.
-2. **Read the raw generations for every headline attribute.** The parquet under `outputs/raw/` carries `raw_output` unmodified; a gap that survives reading fifty actual responses is a different thing from one that only survives a test.
-3. **State the thresholds in the write-up**, not just the verdicts. A reader who disagrees with `material_gap = 5pp` should be able to see what changes at 3.
-4. **Report the excluded cells as a result.** A model that could not be measured is a finding about the model.
-5. **The rationale measure is still unvalidated** against human judgement — the audit's reporting requirement 7, still open.
+1. **Read the raw generations for every headline attribute.** The parquet under `outputs/raw/` carries `raw_output` unmodified; a gap that survives reading fifty actual responses is a different thing from one that only survives a test.
+2. **State the thresholds in the write-up**, not just the verdicts. A reader who disagrees with `material_gap = 5pp` should be able to see what changes at 3.
+3. **Report the excluded cells as a result.** A model that could not be measured is a finding about the model.
+4. **The rationale measure is still unvalidated** against human judgement — the audit's reporting requirement 7, still open.

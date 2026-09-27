@@ -1,0 +1,12 @@
+{
+  "run": "Qwen3.5-9B--en--sft--adapter--en_only",
+  "prompts": 31050,
+  "hire_rate_base": 0.14492753623188406,
+  "hire_rate_adapter": 0.27265700483091787,
+  "unstable_base_at_own_threshold": 0.08074074074074074,
+  "unstable_adapter_at_own_threshold": 0.03481481481481481,
+  "base_threshold_matched_to_adapter_hire_rate": -1.125,
+  "hire_rate_base_matched": 0.27256038647342995,
+  "unstable_base_at_matched_hire_rate": 0.12962962962962962,
+  "gain_explained_by_shift_pct": -106.4516129032258
+}

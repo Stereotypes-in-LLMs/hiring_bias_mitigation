@@ -24,9 +24,10 @@ Everything is collected in the Hugging Face collection
 | Artifact | Where | What it holds |
 |---|---|---|
 | **Model responses** | [`Stereotypes-in-LLMs/hiring-bias-mitigation-responses`](https://huggingface.co/datasets/Stereotypes-in-LLMs/hiring-bias-mitigation-responses) | Every audited response, one subset per run: baselines of all five models, and the prompt, scrub and LEACE mitigations on Qwen3.5-4B/9B, English and Ukrainian — with each run's metadata, scored summary and the set-stability tables. Re-score any run without a GPU (`run_audit.py --score-only`). |
-| Fine-tuned adapters (SFT) and their responses | *to be added* | After the merged-weight re-audit (see [limitation 5](#known-limitations)). |
+| **Fine-tuned adapters (SFT)** | [`qwen3.5-{4b,9b}-hiring-debias-sft-{en,uk}`](https://huggingface.co/Stereotypes-in-LLMs/qwen3.5-9b-hiring-debias-sft-en), [`lapa-12b-hiring-debias-sft-{en,uk}`](https://huggingface.co/Stereotypes-in-LLMs/lapa-12b-hiring-debias-sft-uk) | Six LoRA adapters, each with a card carrying its own audited numbers and the instruction to **merge before serving** (`scripts/publish_adapters.py`). Their responses are subsets of the responses dataset. |
 | **Synthetic training data** | [`Stereotypes-in-LLMs/hiring-bias-mitigation-synthetic-data`](https://huggingface.co/datasets/Stereotypes-in-LLMs/hiring-bias-mitigation-synthetic-data) | The Step 7 data: SFT, DPO, decision-only DPO, consistency DPO and KTO subsets, plus the raw teacher passes (anchor, invariant, biased). Checked against the benchmark hold-out before upload. Contains deliberately biased negatives. |
-| Results and findings | this repository | [`reports/RESULTS.md`](reports/RESULTS.md), [`reports/MITIGATION_FINDINGS.md`](reports/MITIGATION_FINDINGS.md), [`reports/EXPERIMENT_PLAN.md`](reports/EXPERIMENT_PLAN.md), [`reports/FINDINGS.md`](reports/FINDINGS.md), [`docs/METRICS.md`](docs/METRICS.md) |
+| Results and findings | this repository | **Start here: [`reports/PAPER_KIT.md`](reports/PAPER_KIT.md)** — every claim with its number and the file to check it against. Then [`reports/FINDINGS.md`](reports/FINDINGS.md) (baseline), [`reports/MITIGATION_FINDINGS.md`](reports/MITIGATION_FINDINGS.md) (mitigation), [`reports/RESULTS.md`](reports/RESULTS.md) (generated tables), [`docs/METRICS.md`](docs/METRICS.md) (definitions) |
+| Figures | this repository | [`figures/en/`](figures/en) and [`figures/uk/`](figures/uk) — 11 figures × 2 languages plus 18 per-cell metric tables, each beside its CSV |
 | The audit study's responses | [Hiring Analyses Artifacts](https://huggingface.co/collections/Stereotypes-in-LLMs/hiring-analyses-artifacts-662d4b16d1055e6b3b6d0b9e) | The unmitigated study this work extends. |
 | Source CVs and job descriptions | [Djinni Recruitment Dataset](https://huggingface.co/datasets/Stereotypes-in-LLMs/recruitment-dataset-candidate-profiles-english) | Candidate profiles and job descriptions, English and Ukrainian. |
 
@@ -343,9 +344,6 @@ What to work through, in order:
    should not be argued from with the same force.
 3. **§5 — refusals and parse failures.** If these differ sharply by attribute, every
    denominator downstream is affected and that is itself a result.
-4. **§6 — the manual-verification queue**, then `reports/manual_review/review_queue.csv`.
-   Fill in `reviewer_verdict` and `reviewer_note`. Prioritise `high`: a language drift or a
-   refusal skew changes the interpretation of everything else.
 
 Then run the analysis, which does the grading for you:
 
@@ -641,8 +639,9 @@ never hand-edited, so every table traces back to the generations that produced i
 | §4 | Per-attribute acceptance rates for every single group, with gaps, ranges, Cohen's *h*, and both the unpaired and paired p-values |
 | §5 | **Intersections** — observed rate against the additive prediction from the two marginals, with the sign distribution across all testable cells |
 | §6 | **Mitigation results** — each run against its own baseline |
-| §7 | Refusals, parse failures, rationale leakage |
-| §8 | Manual-verification queue |
+| §7 | **Counterfactual set stability** — the headline metric, per run and per protected group |
+| §8 | Refusals, parse failures, rationale leakage |
+| §9 | Excluded runs — what could not be measured, and why |
 | — | A checklist scoring the report against the audit study's nine reporting requirements |
 
 Runs that covered only part of the benchmark are labelled `⚠ partial: N pairs` in every
@@ -836,7 +835,7 @@ Three additions, each because a *mitigation* study needs them and an audit does 
   decision for the same pair. This is the column that catches degenerate solutions.
 - **Attribute mention rate (leakage).** Share of rationales naming the injected attribute —
   the channel the EU AI Act's human-oversight requirement exposes to a reviewer. Detection is
-  a lexical heuristic, so hits go to manual review rather than being reported as findings.
+  a lexical heuristic, so the rate is the finding; an individual hit is a candidate for it.
 
 **Aggregate indices.** For comparing whole experiments rather than attributes, every run
 carries effect-size-only disparity indices — mean absolute deviation of acceptance rate,
@@ -885,7 +884,7 @@ configs/
     prompt/ scrub/ embedding/ sft/ dpo/
 src/hiring_bias_mitigation/
   data/       benchmark loading + holdout, protected groups, injection, prompt templates
-  eval/       parsing, metrics, statistics, audit scoring, manual review, report, backends
+  eval/       parsing, metrics, statistics, audit scoring, report, backends
   generation/ Djinni pool, teacher prompts, quality filters, dataset assembly
   mitigation/ prompt registry, scrubber, concept erasure, SFT, DPO/ORPO
   utils/      config resolution, logging, seeding
@@ -893,7 +892,7 @@ scripts/      build_benchmark, run_audit, generate_training_data, fit_eraser,
               make_report, push_*_to_hub, generate_experiment_configs, run_all_*.sh
 data/         benchmark, protected_groups, injection_templates, PROVENANCE.md
 eval/results/ one JSON per scored run + index.json
-reports/      RESULTS.md (generated) + manual_review/ (generated)
+reports/      RESULTS.md and the analysis, findings and paper-kit write-ups
 tests/        98 fast, no-GPU tests over the real vendored data
 ```
 
@@ -973,13 +972,15 @@ Carry these into the write-up.
    configs/mitigation/embedding/*_inlp.yaml configs/mitigation/embedding/*_mean_diff.yaml`
    enables them for whoever has the hours.
 
-2. **SFT ran on every target; preference optimisation ran only as probes.** SFT covered all
-   four Qwen targets. DPO ran on Qwen3.5-9B English alone, as a probe — first on the generated
-   pairs, then on decision-only pairs. It was motivated by SFT appearing not to move decisions,
-   which turned out to be an audit artefact (limitation 5), so the probes now answer a narrower
-   question: how a contrastive objective compares with SFT on the same model. KTO is configured, preflighted and has its data built,
-   and was not run. Report the preference family as *probed on one model*, not as a sweep, and
-   never as *no effect* where it was simply not run.
+2. **SFT is the training arm; preference optimisation is future work.** SFT covered all four
+   Qwen targets, with LAPA-12B added as an extension. DPO ran on Qwen3.5-9B English alone, as
+   internal probes — generated pairs, decision-only pairs — alongside a decision-weighted SFT
+   variant. They were motivated by SFT appearing not to move decisions, which turned out to be
+   an audit artefact (limitation 5), and one model in one language cannot carry a claim about
+   an objective, so **none of them is reported in the paper**. Their audits are kept for the
+   authors' own reading. KTO is configured, preflighted and has its data built (published
+   with the synthetic data), and was not run. Never report the preference family as *no
+   effect*: it was not evaluated.
 
 3. **The biased side of the training data is overt; the bias being mitigated is covert.**
    The preference data's rejected responses were written by a teacher *prompted* to be
@@ -1060,8 +1061,8 @@ Carry these into the write-up.
    (2025) find bias entering through writing style with no attribute present at all — which
    no scrubber removes and no condition here measures.
 14. **The rationale measure is unvalidated against human judgement.** Reporting requirement 7
-   remains open; §6 of the report routes it to manual review, but inter-annotator agreement
-   on a sample is still owed.
+   remains open: inter-annotator agreement on a sample is still owed, and no finding rests on
+   the measure.
 
 ---
 

@@ -146,6 +146,17 @@ before matching. Every file here was checked again against that hold-out before 
 Candidates whose own CV already mentions a protected characteristic are also removed, so an
 injected attribute never contradicts its profile.
 
+## Revisions
+
+**2026-09-22 — Ukrainian targets corrected.** The first release carried the *canonical* decision
+word in every target: Ukrainian rows said `{{"decision": "reject"}}` where the prompt asks for
+`найняти або відхилити`. Decisions are normalised to `hire`/`reject` so the analysis is
+language-agnostic, and that normalised value had been written into the target text. Both
+Ukrainian adapters trained on it learned to answer in English — a changed output contract that
+no metric flagged, because the parser accepts either language. Ukrainian targets now carry
+`найняти` / `відхилити`; English rows and every row count are unchanged. If you downloaded this
+dataset before that date, re-download it. Fixed in `generation/dataset.py`, pinned by a test.
+
 ## Known issues
 
 These were measured in the study and matter for anyone reusing the data. Details and proposed

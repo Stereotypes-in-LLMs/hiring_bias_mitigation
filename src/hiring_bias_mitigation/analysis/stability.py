@@ -107,6 +107,14 @@ def compare(base_rows: pd.DataFrame, run_rows: pd.DataFrame, keys: list[str] | N
     sums = by_candidate["sum"].to_numpy()[idx].sum(axis=1)
     counts = by_candidate["count"].to_numpy()[idx].sum(axis=1)
     boots = 100 * sums / counts
+    # The same resamples give an interval for each run's own unstable share, for reporting
+    # the level with its uncertainty rather than only the change.
+    levels = {}
+    for side in ("b", "r"):
+        per = joined[f"unstable_{side}"].astype(float).groupby(joined["candidate_id_b"]).sum()
+        per = per.reindex(by_candidate.index).to_numpy()
+        share = 100 * per[idx].sum(axis=1) / counts
+        levels[side] = (float(np.percentile(share, 2.5)), float(np.percentile(share, 97.5)))
     return {
         "sets": len(joined),
         "variants_per_set": float(joined["variants_r"].median()),
@@ -115,6 +123,10 @@ def compare(base_rows: pd.DataFrame, run_rows: pd.DataFrame, keys: list[str] | N
         "delta_pp": 100 * delta.mean(),
         "ci_low": float(np.percentile(boots, 2.5)),
         "ci_high": float(np.percentile(boots, 97.5)),
+        "base_ci_low": levels["b"][0],
+        "base_ci_high": levels["b"][1],
+        "run_ci_low": levels["r"][0],
+        "run_ci_high": levels["r"][1],
         "fixed": fixed,
         "broken": broken,
         "p_sign": p,

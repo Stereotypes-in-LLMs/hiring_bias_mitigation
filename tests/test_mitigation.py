@@ -196,6 +196,13 @@ def test_every_mitigation_family_honours_the_eval_scope():
                 for config in (root / "configs" / "mitigation" / family).glob(
                     f"{slug}_{lang}_*.yaml"
                 ):
+                    # `*_fullscope.yaml` opts out on purpose: the 9B-English prompt runs were
+                    # scoped to the one confirmed cell, which made the prompt-versus-SFT
+                    # comparison there narrower than in every other cell. These repeat three
+                    # strategies over the full grid and carry their own run names, so the
+                    # scoped runs stay untouched.
+                    if config.stem.endswith("_fullscope"):
+                        continue
                     actual = yaml.safe_load(config.read_text())["protected_groups"]
                     assert sorted(actual) == sorted(expected), (
                         f"{config.relative_to(root)} evaluates {sorted(actual)}, "

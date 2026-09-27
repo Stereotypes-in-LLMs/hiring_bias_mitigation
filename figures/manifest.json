@@ -1,0 +1,156 @@
+{
+  "baseline_disparity": {
+    "en": [
+      "figures/en/baseline_disparity.svg",
+      "figures/en/baseline_disparity.pdf",
+      "figures/en/baseline_disparity.png",
+      "figures/en/baseline_disparity.csv"
+    ],
+    "uk": [
+      "figures/uk/baseline_disparity.svg",
+      "figures/uk/baseline_disparity.pdf",
+      "figures/uk/baseline_disparity.png",
+      "figures/uk/baseline_disparity.csv"
+    ]
+  },
+  "stability_utility_tradeoff": {
+    "en": [
+      "figures/en/stability_utility_tradeoff.svg",
+      "figures/en/stability_utility_tradeoff.pdf",
+      "figures/en/stability_utility_tradeoff.png",
+      "figures/en/stability_utility_tradeoff.csv"
+    ],
+    "uk": [
+      "figures/uk/stability_utility_tradeoff.svg",
+      "figures/uk/stability_utility_tradeoff.pdf",
+      "figures/uk/stability_utility_tradeoff.png",
+      "figures/uk/stability_utility_tradeoff.csv"
+    ]
+  },
+  "fairness_utility_tradeoff": {
+    "en": [
+      "figures/en/fairness_utility_tradeoff.svg",
+      "figures/en/fairness_utility_tradeoff.pdf",
+      "figures/en/fairness_utility_tradeoff.png",
+      "figures/en/fairness_utility_tradeoff.csv"
+    ],
+    "uk": [
+      "figures/uk/fairness_utility_tradeoff.svg",
+      "figures/uk/fairness_utility_tradeoff.pdf",
+      "figures/uk/fairness_utility_tradeoff.png",
+      "figures/uk/fairness_utility_tradeoff.csv"
+    ]
+  },
+  "strategy_ranking": {
+    "en": [
+      "figures/en/strategy_ranking.svg",
+      "figures/en/strategy_ranking.pdf",
+      "figures/en/strategy_ranking.png",
+      "figures/en/strategy_ranking.csv"
+    ],
+    "uk": [
+      "figures/uk/strategy_ranking.svg",
+      "figures/uk/strategy_ranking.pdf",
+      "figures/uk/strategy_ranking.png",
+      "figures/uk/strategy_ranking.csv"
+    ]
+  },
+  "leak_versus_disparity": {
+    "en": [
+      "figures/en/leak_versus_disparity.svg",
+      "figures/en/leak_versus_disparity.pdf",
+      "figures/en/leak_versus_disparity.png",
+      "figures/en/leak_versus_disparity.csv"
+    ],
+    "uk": [
+      "figures/uk/leak_versus_disparity.svg",
+      "figures/uk/leak_versus_disparity.pdf",
+      "figures/uk/leak_versus_disparity.png",
+      "figures/uk/leak_versus_disparity.csv"
+    ]
+  },
+  "attribute_gaps": {
+    "en": [
+      "figures/en/attribute_gaps.svg",
+      "figures/en/attribute_gaps.pdf",
+      "figures/en/attribute_gaps.png",
+      "figures/en/attribute_gaps.csv"
+    ],
+    "uk": [
+      "figures/uk/attribute_gaps.svg",
+      "figures/uk/attribute_gaps.pdf",
+      "figures/uk/attribute_gaps.png",
+      "figures/uk/attribute_gaps.csv"
+    ]
+  },
+  "language_transfer": {
+    "en": [
+      "figures/en/language_transfer.svg",
+      "figures/en/language_transfer.pdf",
+      "figures/en/language_transfer.png",
+      "figures/en/language_transfer.csv"
+    ],
+    "uk": [
+      "figures/uk/language_transfer.svg",
+      "figures/uk/language_transfer.pdf",
+      "figures/uk/language_transfer.png",
+      "figures/uk/language_transfer.csv"
+    ]
+  },
+  "condition_contrast": {
+    "en": [
+      "figures/en/condition_contrast.svg",
+      "figures/en/condition_contrast.pdf",
+      "figures/en/condition_contrast.png",
+      "figures/en/condition_contrast.csv"
+    ],
+    "uk": [
+      "figures/uk/condition_contrast.svg",
+      "figures/uk/condition_contrast.pdf",
+      "figures/uk/condition_contrast.png",
+      "figures/uk/condition_contrast.csv"
+    ]
+  },
+  "training_curves": {
+    "en": [
+      "figures/en/training_curves.svg",
+      "figures/en/training_curves.pdf",
+      "figures/en/training_curves.png",
+      "figures/en/training_curves.csv"
+    ],
+    "uk": [
+      "figures/uk/training_curves.svg",
+      "figures/uk/training_curves.pdf",
+      "figures/uk/training_curves.png",
+      "figures/uk/training_curves.csv"
+    ]
+  },
+  "operating_point": {
+    "en": [
+      "figures/en/operating_point.svg",
+      "figures/en/operating_point.pdf",
+      "figures/en/operating_point.png",
+      "figures/en/operating_point.csv"
+    ],
+    "uk": [
+      "figures/uk/operating_point.svg",
+      "figures/uk/operating_point.pdf",
+      "figures/uk/operating_point.png",
+      "figures/uk/operating_point.csv"
+    ]
+  },
+  "matched_scope": {
+    "en": [
+      "figures/en/matched_scope.svg",
+      "figures/en/matched_scope.pdf",
+      "figures/en/matched_scope.png",
+      "figures/en/matched_scope.csv"
+    ],
+    "uk": [
+      "figures/uk/matched_scope.svg",
+      "figures/uk/matched_scope.pdf",
+      "figures/uk/matched_scope.png",
+      "figures/uk/matched_scope.csv"
+    ]
+  }
+}

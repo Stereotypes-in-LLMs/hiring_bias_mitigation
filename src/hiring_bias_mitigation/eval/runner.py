@@ -171,6 +171,39 @@ def _second_pass(df: pd.DataFrame, first: pd.DataFrame, backend) -> list[str]:
     return backend.generate(prompts)
 
 
+
+def _generate_resumable(backend, prompts: list[str], run_name: str, chunk: int = 4000,
+                        tag: str = "main") -> list[str]:
+    """Generates in chunks, keeping finished ones on disk so a crash costs one chunk.
+
+    An audit is two hours of generation on the larger models. Losing a machine to a power cut
+    halfway through used to mean starting again; now each chunk is written as it lands and a
+    rerun picks up from the first unfinished one. The cache is keyed by a hash of the prompts
+    themselves, so a changed config can never resume onto someone else's generations.
+    """
+    import hashlib
+
+    digest = hashlib.sha256("\x00".join(prompts).encode()).hexdigest()[:16]
+    cache = Path(resolve_output_path("outputs/partial")) / f"{run_name}--{tag}.parquet"
+    done: list[str] = []
+    if cache.is_file():
+        frame = pd.read_parquet(cache)
+        if len(frame) and frame["digest"].iloc[0] == digest and len(frame) <= len(prompts):
+            done = frame["raw_output"].tolist()
+            log.info("resuming %s: %d of %d prompts already generated", cache.name, len(done),
+                     len(prompts))
+        else:
+            log.warning("%s is for different prompts; ignoring it", cache.name)
+
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    while len(done) < len(prompts):
+        batch = prompts[len(done):len(done) + chunk]
+        done.extend(backend.generate(batch))
+        pd.DataFrame({"raw_output": done, "digest": digest}).to_parquet(cache, index=False)
+        log.info("generated %d / %d", len(done), len(prompts))
+    return done[:len(prompts)]
+
+
 def run_audit(cfg: dict) -> tuple[pd.DataFrame, dict]:
     """Generates every response for one run. Returns (parsed frame, run metadata)."""
     set_seed(cfg.get("seed", 42))
@@ -218,7 +251,8 @@ def run_audit(cfg: dict) -> tuple[pd.DataFrame, dict]:
         df, mitigation_meta = _apply_mitigation_to_frame(df, cfg, backend)
         log.info("run %s: %d prompts", build_run_name(cfg), len(df))
 
-        raw = backend.generate(_build_prompts(df, strategy))
+        raw = _generate_resumable(backend, _build_prompts(df, strategy),
+                                  build_run_name(cfg))
         df = df.assign(raw_output=raw)
         parsed = parse_frame(df)
 
@@ -261,6 +295,13 @@ def run_audit(cfg: dict) -> tuple[pd.DataFrame, dict]:
     return parsed, meta
 
 
+def _drop_partial(run_name: str) -> None:
+    """The finished artifact supersedes the chunk cache."""
+    folder = Path(resolve_output_path("outputs/partial"))
+    for path in folder.glob(f"{run_name}--*.parquet"):
+        path.unlink(missing_ok=True)
+
+
 def save_raw(parsed: pd.DataFrame, meta: dict, output_dir: str | Path) -> Path:
     """Persists generations plus metadata so scoring never needs the GPU again."""
     output_dir = Path(resolve_output_path(output_dir))
@@ -271,6 +312,7 @@ def save_raw(parsed: pd.DataFrame, meta: dict, output_dir: str | Path) -> Path:
         json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8"
     )
     log.info("wrote %d rows to %s", len(parsed), path)
+    _drop_partial(meta["run_name"])
     return path
 
 

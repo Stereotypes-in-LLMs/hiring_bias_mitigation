@@ -544,3 +544,36 @@ def test_report_excludes_adapters_served_through_vllm_lora():
     assert not RP.record_usable(old)
     assert "vLLM" in RP.record_unusable_reason(old)
     assert RP.record_usable(merged) and RP.record_usable(prompt)
+
+
+def test_audit_generation_resumes_from_its_chunk_cache(monkeypatch, tmp_path):
+    """A power cut mid-audit must cost one chunk, not the whole two-hour run."""
+    from hiring_bias_mitigation.eval import runner as R
+
+    monkeypatch.setattr(R, "resolve_output_path", lambda p: str(tmp_path / str(p)))
+    prompts = [f"p{i}" for i in range(10)]
+
+    class Backend:
+        def __init__(self):
+            self.seen = 0
+
+        def generate(self, batch):
+            self.seen += len(batch)
+            if self.seen > 4:                      # the machine dies after the first chunk
+                raise RuntimeError("power cut")
+            return [f"out-{b}" for b in batch]
+
+    first = Backend()
+    with pytest.raises(RuntimeError):
+        R._generate_resumable(first, prompts, "run", chunk=4)
+    assert first.seen == 8                          # one chunk stored, one lost
+
+    second = Backend()
+    second.generate = lambda batch: [f"out-{b}" for b in batch]
+    out = R._generate_resumable(second, prompts, "run", chunk=4)
+    assert out == [f"out-p{i}" for i in range(10)]
+
+    # a different prompt set must never resume onto these generations
+    third = Backend()
+    third.generate = lambda batch: ["fresh"] * len(batch)
+    assert R._generate_resumable(third, ["x", "y"], "run", chunk=4) == ["fresh", "fresh"]

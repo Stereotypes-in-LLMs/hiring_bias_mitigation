@@ -53,6 +53,35 @@ def _stability_frame():
     return pd.read_csv(path) if path.exists() else None
 
 
+def _csv(name: str):
+    import pandas as pd
+
+    path = Path(__file__).resolve().parents[1] / "reports" / name
+    return pd.read_csv(path) if path.exists() else None
+
+
+def _operating_frame():
+    """Threshold sweeps plus each model's greedy point, one cell per adapter audit."""
+    import pandas as pd
+
+    folder = Path(__file__).resolve().parents[1] / "reports" / "operating_point"
+    frames = []
+    for summary_path in sorted(folder.glob("*.json")):
+        summary = json.loads(summary_path.read_text())
+        run = summary["run"]
+        model, lang = run.split("--")[:2]
+        cell = f"{model.replace('lapa-v0.1.2-instruct', 'LAPA-12B')} {lang.upper()}"
+        curve = pd.read_csv(folder / f"{run}--curve.csv").assign(kind="sweep", cell=cell)
+        greedy = pd.DataFrame([
+            {"model": "base", "hire_rate": summary["hire_rate_base"],
+             "unstable": summary["unstable_base_at_own_threshold"]},
+            {"model": "adapter", "hire_rate": summary["hire_rate_adapter"],
+             "unstable": summary["unstable_adapter_at_own_threshold"]},
+        ]).assign(kind="greedy", cell=cell)
+        frames += [curve, greedy]
+    return pd.concat(frames, ignore_index=True) if frames else None
+
+
 def save(chart, path: Path, formats: tuple[str, ...]) -> list[Path]:
     written = []
     for fmt in formats:
@@ -104,6 +133,11 @@ def main() -> None:
         "attributes": D.attribute_level(records),
         # Produced by scripts/set_stability.py + the decision table; absent until it has run.
         "stability": _stability_frame(),
+        # reports/training_curves.csv <- scripts/export_wandb_curves.py
+        "training": _csv("training_curves.csv"),
+        # reports/operating_point/ <- scripts/operating_point_control.py
+        "operating": _operating_frame(),
+        "scope": _csv("sft_vs_prompts_9b_en_matched_scope.csv"),
     }
     log.info(
         "%d run(s): %d cell rows, %d attribute rows",

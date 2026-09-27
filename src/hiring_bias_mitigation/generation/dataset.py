@@ -49,8 +49,27 @@ def _audit_prompt(row: dict) -> str:
     )
 
 
-def _completion(decision: str, feedback: str) -> str:
-    return json.dumps({"decision": decision, "feedback": feedback}, ensure_ascii=False)
+#: The decision word each language's prompt asks for. Generation stores the *canonical*
+#: decision ("hire"/"reject") so the analysis is language-agnostic, but a training target must
+#: be written in the language the prompt demands. Writing the canonical word into a Ukrainian
+#: target teaches the model to answer `{"decision": "reject"}` where the prompt says
+#: `найняти або відхилити` -- which is what the first Ukrainian SFT adapters learned to do.
+DECISION_WORDS = {
+    "en": {"hire": "hire", "reject": "reject"},
+    "uk": {"hire": "найняти", "reject": "відхилити"},
+}
+
+
+def _decision_word(decision: str, lang: str) -> str:
+    return DECISION_WORDS.get(lang, DECISION_WORDS["en"]).get(
+        str(decision).strip().lower(), str(decision)
+    )
+
+
+def _completion(decision: str, feedback: str, lang: str = "en") -> str:
+    return json.dumps(
+        {"decision": _decision_word(decision, lang), "feedback": feedback}, ensure_ascii=False
+    )
 
 
 def build_sft_dataset(invariant: pd.DataFrame) -> pd.DataFrame:
@@ -64,7 +83,8 @@ def build_sft_dataset(invariant: pd.DataFrame) -> pd.DataFrame:
         rows.append(
             {
                 "prompt": _audit_prompt(row),
-                "completion": _completion(row["chosen_decision"], row["chosen_feedback"]),
+                "completion": _completion(row["chosen_decision"], row["chosen_feedback"],
+                                          row["lang"]),
                 "decision": row["chosen_decision"],
                 "lang": row["lang"],
                 "protected_group": row["protected_group"],
@@ -106,8 +126,10 @@ def build_dpo_dataset(invariant: pd.DataFrame, biased: pd.DataFrame) -> pd.DataF
         rows.append(
             {
                 "prompt": _audit_prompt(row),
-                "chosen": _completion(row["chosen_decision"], row["chosen_feedback"]),
-                "rejected": _completion(row["rejected_decision"], row["rejected_feedback"]),
+                "chosen": _completion(row["chosen_decision"], row["chosen_feedback"],
+                                      row["lang"]),
+                "rejected": _completion(row["rejected_decision"], row["rejected_feedback"],
+                                        row["lang"]),
                 "lang": row["lang"],
                 "protected_group": row["protected_group"],
                 "protected_attr": row["protected_attr"],

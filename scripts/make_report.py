@@ -1,8 +1,8 @@
-"""Regenerates reports/RESULTS.md and the manual-review sheets from eval/results/.
+"""Regenerates reports/RESULTS.md and the run index from eval/results/.
 
     python scripts/make_report.py
 
-Both outputs are derived, never hand-edited. Everything in them traces back to a run record
+The outputs are derived, never hand-edited. Everything in them traces back to a run record
 in `eval/results/`, so a number in the paper can always be walked back to the generations
 that produced it.
 """
@@ -16,7 +16,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from hiring_bias_mitigation.eval.manual_review import write_review_csv  # noqa: E402
 from hiring_bias_mitigation.eval.report import (  # noqa: E402
     load_records,
     record_unusable_reason,
@@ -33,7 +32,6 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-dir", default=str(REPO_ROOT / "eval" / "results"))
     parser.add_argument("--out", default=str(REPO_ROOT / "reports" / "RESULTS.md"))
-    parser.add_argument("--review-dir", default=str(REPO_ROOT / "reports" / "manual_review"))
     args = parser.parse_args()
 
     records = load_records(args.results_dir)
@@ -45,10 +43,6 @@ def main() -> None:
         )
     path = write_report(records, args.out, excluded)
     log.info("wrote %s from %d run record(s)", path, len(records))
-
-    review_dir = Path(args.review_dir)
-    csv_path = write_review_csv(records, review_dir / "review_queue.csv")
-    log.info("wrote %s", csv_path)
 
     index = {
         record["run_name"]: {

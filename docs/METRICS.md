@@ -9,7 +9,7 @@ stay directly comparable with its published baseline. The rest exist because a *
 study needs them and an audit does not.
 
 - [The decision pipeline](#the-decision-pipeline) — what gets counted at all
-- [Fairness measures](#fairness-measures) — AR, IR, FS
+- [Fairness measures](#fairness-measures) — AR, IR, **counterfactual set stability** (the headline mitigation measure), FS
 - [Utility measures](#utility-measures) — the columns that catch degenerate "fixes"
 - [Diagnostic measures](#diagnostic-measures) — refusals, leakage
 - [Aggregate indices](#aggregate-indices) — comparing whole experiments
@@ -95,6 +95,51 @@ It also conflates attribute-driven instability with ordinary decoding stochastic
 study decodes **greedily** by default, which removes that component — but it also means our
 IR is not directly comparable to an audit that sampled. Set `n_samples > 1` with a non-zero
 temperature to measure the variance instead of removing it.
+
+### Counterfactual set stability (share of unstable sets) — the headline mitigation measure
+
+**What it is.** A **set** is one candidate–job pair under one injection condition (explicit or
+implicit), evaluated with every attribute variant of the groups in scope — 5 variants for
+military status alone, 34 for all three single groups. A set is **unstable** when its decisions
+are not all the same: somewhere in it, changing nothing but the attribute flipped the verdict.
+
+```
+unstable(set) = 1[ |{decision(v) : v ∈ set}| > 1 ]
+share of unstable sets = mean over complete sets of unstable(set)
+```
+
+Only **complete** sets count — every variant parsed to hire or reject — so a refusal can
+neither create nor hide an instability.
+
+**How a mitigation is compared.** Each mitigated set is paired with *the same set* at
+baseline, **restricted to the same variants** (instability grows with the number of variants,
+and a baseline covering all 179 attributes would otherwise flatter every narrower run):
+
+| Output | Meaning |
+|---|---|
+| `Unstable %` | share of unstable sets, mitigated run (baseline in brackets) |
+| `Δ pp` | the change; negative is better |
+| `Fixed` / `Broken` | sets unstable→stable / stable→unstable |
+| `p (FDR)` | exact sign test on fixed vs broken, Benjamini–Hochberg across all comparisons |
+| `95% CI` | bootstrap over **candidates**, since sets sharing a candidate are not independent |
+
+**How to read it.** The most direct measure of what every mitigation here is trying to achieve:
+*does the attribute alone still change the decision about this candidate?* A drop from 17.3% to
+7.2% means the attribute tipped the decision in about one set in six before and one in
+fourteen after.
+
+**How it differs from IR and MAD.** IR counts *rows* that disagree with their set's majority;
+set stability counts *sets* with any disagreement, and pairs each set with itself, which gives a
+paired test and a count of fixed and broken sets. MAD averages acceptance rates over whole
+attributes, so opposite flips cancel and one corrected decision moves an attribute's rate by
+1/450; set stability sees every flip.
+
+**What it misses.** Like IR it is **undirected** — read it with AR to know which attribute is
+favoured. It depends on the operating point: at a hire rate near 0% or 100% nothing can flip,
+so a mitigation that moves the hire rate a long way should also be compared at equal hire rate
+(`scripts/operating_point_control.py`). Results: `reports/RESULTS.md` §7,
+`reports/set_stability.csv`, `reports/set_stability_by_group.csv`; code:
+`src/hiring_bias_mitigation/analysis/stability.py`.
 
 ### Feedback similarity (FS)
 
@@ -182,7 +227,8 @@ not a label. Never call it that.
 Reported per run and per attribute. These are **a bias signal in their own right**, not
 plumbing: a model that refuses more often for one attribute is treating it differently, and
 because refusals leave the denominator, that difference also silently changes every other
-statistic. A large per-attribute skew is routed to manual review.
+statistic. A large per-attribute skew is reported as a result about the model, not as
+plumbing to be cleaned up.
 
 ### Attribute mention rate (leakage)
 
@@ -193,8 +239,9 @@ says *"as a veteran, you may find..."*, the attribute has entered the channel a 
 reviewer reads — regardless of whether the decision changed.
 
 **What it is not.** Detection is **prefix matching**: words are truncated to five characters
-to survive Ukrainian inflection, which over-matches. Every hit is a manual-review candidate,
-not a finding. Read the sampled rows before quoting a rate.
+to survive Ukrainian inflection, which over-matches. An individual hit is a candidate, not a
+finding; only the rate is reported, and the raw generations under `outputs/raw/` carry the
+unmodified text behind it.
 
 ---
 
@@ -359,9 +406,7 @@ Before any number becomes a claim:
 4. **Do AR and IR agree?** Read the four-way table above. AR alone cannot tell you direction
    at the individual level.
 5. **What happened to utility?** A fairness gain with a utility drop is a degradation.
-6. **Does the manual-review queue touch this row?** Language drift, fuzzy decision mapping and
-   canned rationales all invalidate measures computed on top of them.
-7. **Does it hold across conditions?** Explicit and implicit can give opposite verdicts on the
+6. **Does it hold across conditions?** Explicit and implicit can give opposite verdicts on the
    same model; a result in one is not a result in both.
 
 ---
@@ -383,8 +428,8 @@ Before any number becomes a claim:
 | Where | What |
 |---|---|
 | `reports/RESULTS.md` | All of it, rendered, with the reading guidance inline |
-| `eval/results/<run>.json` | Machine-readable: per-attribute rows, p-values raw and adjusted, bootstrap CIs, effect sizes, aggregate indices, manual-review queue |
-| `reports/manual_review/review_queue.csv` | The rows a human still has to read, with columns to fill in |
+| `eval/results/<run>.json` | Machine-readable: per-attribute rows, p-values raw and adjusted, bootstrap CIs, effect sizes, aggregate indices |
+| `reports/set_stability*.csv`, `reports/mitigation_decision_table.csv` | Counterfactual set stability per run and per group, and the decision table (Δ unstable sets, CI, FDR, Δ utility) |
 | `$HBM_OUTPUT_ROOT/outputs/raw/<run>.parquet` | Every model response, unmodified, so any of this can be recomputed without a GPU |
 | `src/hiring_bias_mitigation/eval/metrics.py` | The definitions, in code |
 | `src/hiring_bias_mitigation/eval/stats.py` | The tests, in code |

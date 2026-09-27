@@ -39,6 +39,15 @@ def conform_to_base(out: Path, base_name: str, base_dir: Path) -> None:
     from safetensors import safe_open
     from safetensors.torch import save_file
 
+    saved_arch = json.loads((out / "config.json").read_text()).get("architectures")
+    base_arch = json.loads((base_dir / "config.json").read_text()).get("architectures")
+    if saved_arch == base_arch:
+        # The save already is the base's model class (e.g. Gemma-3 based LAPA, which loads as
+        # Gemma3ForConditionalGeneration). Its tensor names may follow the newer transformers
+        # layout rather than the base checkpoint's, which vLLM reads either way.
+        log.info("merged save already has the base architecture %s; kept as saved", saved_arch)
+        return
+
     base_map = json.loads((base_dir / "model.safetensors.index.json").read_text())["weight_map"]
     ours: dict[str, str] = {}
     for f in sorted(out.glob("*.safetensors")):

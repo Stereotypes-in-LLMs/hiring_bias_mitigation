@@ -11,8 +11,8 @@
 # scripts/run_all_*.sh. Without it, your current selection is used unchanged.
 #
 # Deliberately, `stage1` stops after the audit. Which models, groups and languages deserve a
-# mitigation run is a decision to make by reading reports/RESULTS.md and the manual-review
-# queue -- not one to guess in advance, and not one this script should make for you.
+# mitigation run is a decision to make by reading reports/RESULTS.md -- not one to guess in
+# advance, and not one this script should make for you.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -88,4 +88,3 @@ echo "================================================================"
 cat reports/RESULTS.md
 echo "================================================================"
 echo "Full report: reports/RESULTS.md"
-echo "Rows a human still needs to read: reports/manual_review/review_queue.csv"

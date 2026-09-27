@@ -12,7 +12,6 @@ Layout:
     3. Acceptance rate by attribute for the pivot group, with gaps and effect sizes (req. 2).
     4. Mitigation results: every family against the baseline, fairness next to utility.
     5. Refusals and parse failures per run (req. 4).
-    6. Manual-verification queue: what a human still has to check.
 """
 
 from __future__ import annotations
@@ -154,6 +153,28 @@ def _variant(record: dict) -> str:
     )
 
 
+#: Footnote for the lexical scrubber wherever it sits beside real mitigations.
+ORACLE_NOTE = (
+    "\\* **Lexical scrubbing is an oracle upper bound, not a comparable mitigation.** It "
+    "removes the attribute with the exact injection templates this study wrote, so after "
+    "scrubbing every attribute variant of a CV is character-for-character the attribute-free "
+    "CV (verified: 100% of rows in all four cells). The model therefore sees the *same prompt* "
+    "for every variant, and its instability and disparity are **zero by construction** — up to "
+    "the pipeline's noise floor: 0–0.7% of sets still flip on identical prompts, which is "
+    "vLLM's batch-level numerical nondeterminism under greedy decoding, not the attribute. "
+    "The row shows what perfect removal of the attribute would buy. Real CVs do not state an "
+    "attribute in the study's own template, and bias carried by anything the templates do not "
+    "cover — names, phrasing, career gaps — is untouched. Compare mitigations with each other "
+    "and read this row only as the ceiling; LLM scrubbing, which has to find the attribute "
+    "itself, is the realistic version."
+)
+
+
+def _variant_display(family: str, variant: str) -> str:
+    """The variant name, starred when the row is the oracle lexical scrubber."""
+    return f"{variant}\\*" if family == "scrub" and variant == "lexical" else variant
+
+
 def _model_short(record: dict) -> str:
     return record.get("meta", {}).get("model", "?").split("/")[-1]
 
@@ -220,8 +241,14 @@ def _section_set_stability(records: list[dict]) -> str:
         from ..analysis.stability import stability_table
         from ..utils.config import resolve_output_path
 
+        raw_dir = Path(resolve_output_path("outputs/raw"))
+        if not raw_dir.is_dir():
+            # Not an empty result: the raw generations are on the model drive, and without
+            # HBM_OUTPUT_ROOT the section would otherwise vanish from the report unnoticed.
+            return (f"_Set stability unavailable: no raw generations at `{raw_dir}`. Load `.env` "
+                    "(HBM_OUTPUT_ROOT) and rerun `scripts/make_report.py`._")
         usable = {r["run_name"] for r in records}
-        table = stability_table(resolve_output_path("outputs/raw"), usable)
+        table = stability_table(raw_dir, usable)
     except Exception as exc:  # pragma: no cover - depends on the model drive being mounted
         return f"_Set stability unavailable: {exc}_"
     if table.empty:
@@ -234,7 +261,8 @@ def _section_set_stability(records: list[dict]) -> str:
     for r in table.sort_values(["lang", "model", "family", "delta_pp"]).itertuples():
         mark = " •" if r.p_fdr < 0.05 else ""
         rows.append(
-            f"| {r.model} | {r.lang} | {r.family} | {_md(r.variant or '—')} | {r.sets} | "
+            f"| {r.model} | {r.lang} | {r.family} | "
+            f"{_variant_display(r.family, _md(r.variant or '—'))} | {r.sets} | "
             f"{r.variants_per_set:.0f} | {r.unstable_run_pct:.1f} ({r.unstable_base_pct:.1f}) | "
             f"{r.delta_pp:+.1f}{mark} | [{r.ci_low:+.1f}, {r.ci_high:+.1f}] | {r.fixed} | "
             f"{r.broken} | {r.p_fdr:.1e} |"
@@ -257,6 +285,7 @@ def _section_set_stability(records: list[dict]) -> str:
         "measured on the sets it could still answer, plausibly the easier ones.\n\n"
         "Per-group results are in `reports/set_stability_by_group.csv`.\n\n"
         + "\n".join(rows)
+        + "\n\n" + ORACLE_NOTE
     )
 
 
@@ -286,7 +315,6 @@ def render(records: list[dict], excluded: list[dict] | None = None) -> str:
         ("Counterfactual set stability", _section_set_stability(records)),
         ("Refusals, parse failures and rationale leakage",
          _section_output_handling(records, excluded)),
-        ("Manual verification queue", _section_manual_review(records)),
         ("Excluded runs", _section_excluded(excluded or [])),
     ]
     parts = [_header(records)]
@@ -345,7 +373,33 @@ def _section_inventory(records: list[dict]) -> str:
         "decoding is the default: it removes sampling variance so that a difference between "
         "two runs is attributable to the mitigation rather than to the decoder. Runs with "
         "`n>1` are the ones that deliberately measure that variance instead.\n\n"
+        + _probe_note(records)
         + "\n".join(rows)
+    )
+
+
+def _is_probe(record: dict) -> bool:
+    """Internal probes: audited, tabulated here, deliberately outside the paper.
+
+    Preference optimisation and the decision-weighted SFT variant ran on one model in one
+    language, to answer a question the authors had at the time. One cell cannot carry a claim
+    about an objective, so these rows stay in the generated tables -- where leaving them out
+    would be selective reporting -- and out of the write-ups. The report says which is which
+    rather than leaving a reader to infer it from the run name.
+    """
+    return _family(record) == "dpo" or "_v2_" in record["run_name"]
+
+
+def _probe_note(records: list[dict]) -> str:
+    probes = sorted(r["run_name"] for r in records if _is_probe(r))
+    if not probes:
+        return ""
+    return (
+        "**Internal probes, not reported as results:** "
+        + ", ".join(f"`{name}`" for name in probes)
+        + ". Preference optimisation (DPO/KTO) and the decision-weighted SFT variant ran on "
+        "Qwen3.5-9B English only; the findings documents carry them as future work, not as "
+        "an arm of the study.\n\n"
     )
 
 
@@ -839,7 +893,7 @@ def _section_mitigation(baselines: list[dict], mitigated: list[dict]) -> str:
         before = _restricted_metrics(base, cells) if base else {}
         rows.append(
             f"| {_model_short(record)} | {record['meta']['lang']} | {_family(record)} | "
-            f"{_variant(record)} | {len(cells)} | "
+            f"{_variant_display(_family(record), _variant(record))} | {len(cells)} | "
             f"{_with_base(after, before, 'ar_mad', _pct)} | "
             f"{_delta(after, before, 'ar_mad', scale=100)} | "
             f"{_delta_gap(base, record)} | "
@@ -873,6 +927,7 @@ def _section_mitigation(baselines: list[dict], mitigated: list[dict]) -> str:
         "denominators, so a model that learns to decline is a model whose disparity becomes "
         "unmeasurable rather than absent.\n\n"
         + "\n".join(rows)
+        + "\n\n" + ORACLE_NOTE
     )
 
 
@@ -1029,50 +1084,6 @@ def _section_output_handling(records: list[dict], excluded: list[dict] | None = 
     )
 
 
-def _section_manual_review(records: list[dict]) -> str:
-    tally: dict[str, dict] = {}
-    for record in records:
-        for item in record.get("manual_review", []):
-            entry = tally.setdefault(
-                item["check"],
-                {
-                    "severity": item["severity"],
-                    "rows": 0,
-                    "runs": set(),
-                    "message": item["message"],
-                },
-            )
-            entry["rows"] += item["n_rows"]
-            entry["runs"].add(record["run_name"])
-
-    if not tally:
-        return (
-            "No automated check raised anything. That is not the same as verified — spot-check "
-            "a sample of raw generations regardless."
-        )
-
-    order = {"high": 0, "medium": 1, "low": 2}
-    rows = ["| Check | Severity | Rows | Runs |", "|---|---|---:|---:|"]
-    details = []
-    for check, entry in sorted(tally.items(), key=lambda kv: order.get(kv[1]["severity"], 3)):
-        rows.append(
-            f"| `{check}` | {entry['severity']} | {entry['rows']:,} | {len(entry['runs'])} |"
-        )
-        details.append(f"**`{check}`** — {entry['message']}")
-    return (
-        "Several signals in this pipeline are heuristics: the decision lexicon maps loose "
-        "model wording onto hire/reject, attribute-mention detection is prefix matching, "
-        "feedback similarity is a weak instrument, and an uncorrected flag on a small effect "
-        "is what multiple comparisons produce from a fair model. **Nothing below should enter "
-        "the paper as a finding until someone has read the underlying rows.**\n\n"
-        "Sampled rows are in `reports/manual_review/` as CSVs with empty `reviewer_verdict` "
-        "and `reviewer_note` columns to fill in.\n\n"
-        + "\n".join(rows)
-        + "\n\n"
-        + "\n\n".join(details)
-    )
-
-
 def _footer() -> str:
     return (
         "---\n\n"
@@ -1092,8 +1103,8 @@ def _footer() -> str:
         "| 6 | Test both explicit and implicit presentation | ✅ both, plus an attribute-free "
         "control the audit study did not have |\n"
         "| 7 | Validate the embedding rationale measure against human judgement | ⚠️ **open** — "
-        "routed to manual review; inter-annotator agreement on a sample is still "
-        "owed |\n"
+        "inter-annotator agreement on a sample is still owed; no finding rests on this "
+        "measure |\n"
         "| 8 | Include protected attributes beyond gender and race | ✅ military status, "
         "religion, and their fully-crossed intersections |\n"
         "| 9 | Audit in every language of deployment | ✅ English and Ukrainian |\n"
