@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "hiring_bias_mitigation: comparing bias mitigation methods for large language models in candidate screening"
+type: software
+authors:
+  - family-names: Drushchak
+    given-names: Nazarii
+    orcid: "https://orcid.org/0000-0002-5056-3026"
+    affiliation: "Ukrainian Catholic University"
+version: 1.0.0
+date-released: "2026-09-27"
+license: MIT
+repository-code: "https://github.com/Stereotypes-in-LLMs/hiring_bias_mitigation"
+keywords:
+  - large language models
+  - bias mitigation
+  - candidate screening
+  - fairness
+  - Ukrainian
+abstract: >-
+  Code, configurations and reports for a counterfactual comparison of bias
+  mitigation methods (prompt instructions, attribute removal, LEACE concept
+  erasure, LoRA fine-tuning) for LLM hiring decisions in English and Ukrainian.
